@@ -1,0 +1,51 @@
+table:
+  name: menus
+  schema: public
+object_relationships:
+  - name: menuCategory
+    using:
+      foreign_key_constraint_on: categoryId
+  - name: restaurant
+    using:
+      foreign_key_constraint_on: restaurantId
+array_relationships:
+  - name: images
+    using:
+      foreign_key_constraint_on:
+        column: menuId
+        table:
+          name: images
+          schema: public
+  - name: orderItems
+    using:
+      foreign_key_constraint_on:
+        column: menuId
+        table:
+          name: orderItems
+          schema: public
+  - name: vocherItems
+    using:
+      foreign_key_constraint_on:
+        column: menuId
+        table:
+          name: vocherItems
+          schema: public
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - avatar
+        - id
+        - name
+        - price
+      filter: {}
+    comment: ""
+  - role: user
+    permission:
+      columns:
+        - categoryId
+        - id
+        - name
+        - price
+      filter: {}
+    comment: ""

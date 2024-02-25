@@ -1,0 +1,10 @@
+table:
+  name: vocherItems
+  schema: public
+object_relationships:
+  - name: menu
+    using:
+      foreign_key_constraint_on: menuId
+  - name: vocher
+    using:
+      foreign_key_constraint_on: vocherId

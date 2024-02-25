@@ -1,0 +1,18 @@
+table:
+  name: users
+  schema: public
+object_relationships:
+  - name: restaurant
+    using:
+      foreign_key_constraint_on: restaurantId
+  - name: userDetail
+    using:
+      foreign_key_constraint_on: userDetailId
+array_relationships:
+  - name: vochers
+    using:
+      foreign_key_constraint_on:
+        column: userId
+        table:
+          name: vochers
+          schema: public

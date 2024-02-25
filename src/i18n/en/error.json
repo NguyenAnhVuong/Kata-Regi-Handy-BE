@@ -1,0 +1,11 @@
+{
+  "ACCOUNT_NOT_EXISTS": "Account not exists",
+  "ACCOUNT_EXISTS": "Account exists",
+  "PASSWORD_INCORRECT": "Password incorrect",
+  "REFRESH_TOKEN_NOT_EXISTS": "Refresh token not exists",
+  "UNAUTHORIZED": "Unauthorized",
+  "INVALID_PARAM": "Invalid param",
+  "SYSTEM_REGISTER_CODE_INCORRECT": "Admin register code incorrect",
+  "RESTAURANT_NOT_EXISTS": "Restaurant not exists",
+  "MENU_CATEGORY_NOT_EXISTS": "Menu category not exists"
+}

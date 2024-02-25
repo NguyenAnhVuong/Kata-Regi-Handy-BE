@@ -1,0 +1,11 @@
+table:
+  name: orders
+  schema: public
+array_relationships:
+  - name: orderItems
+    using:
+      foreign_key_constraint_on:
+        column: orderId
+        table:
+          name: orderItems
+          schema: public

@@ -1,0 +1,10 @@
+table:
+  name: images
+  schema: public
+object_relationships:
+  - name: menu
+    using:
+      foreign_key_constraint_on: menuId
+  - name: restaurant
+    using:
+      foreign_key_constraint_on: restaurantId

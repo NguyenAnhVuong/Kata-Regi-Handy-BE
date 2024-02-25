@@ -1,0 +1,32 @@
+table:
+  name: restaurants
+  schema: public
+array_relationships:
+  - name: images
+    using:
+      foreign_key_constraint_on:
+        column: restaurantId
+        table:
+          name: images
+          schema: public
+  - name: menus
+    using:
+      foreign_key_constraint_on:
+        column: restaurantId
+        table:
+          name: menus
+          schema: public
+  - name: users
+    using:
+      foreign_key_constraint_on:
+        column: restaurantId
+        table:
+          name: users
+          schema: public
+  - name: vochers
+    using:
+      foreign_key_constraint_on:
+        column: restaurantId
+        table:
+          name: vochers
+          schema: public

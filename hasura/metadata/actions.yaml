@@ -1,0 +1,35 @@
+actions:
+  - name: userLogin
+    definition:
+      kind: synchronous
+      handler: '{{ACTION_BASE_URL}}/api/user/login'
+      forward_client_headers: true
+  - name: userLogout
+    definition:
+      kind: synchronous
+      handler: '{{ACTION_BASE_URL}}/api/user/logout'
+      forward_client_headers: true
+custom_types:
+  enums:
+    - name: ERole
+      values:
+        - description: null
+          is_deprecated: null
+          value: SYSTEM
+        - description: null
+          is_deprecated: null
+          value: RESTAURANT_ADMIN
+        - description: null
+          is_deprecated: null
+          value: RESTAURANT_STAFF
+        - description: null
+          is_deprecated: null
+          value: USER
+  input_objects:
+    - name: UserLoginInput
+  objects:
+    - name: IResponseAuthUser
+    - name: UserLoginOutputData
+    - name: UserLoginOutput
+    - name: UserLogoutOutput
+  scalars: []

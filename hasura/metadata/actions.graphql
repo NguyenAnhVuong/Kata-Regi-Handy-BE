@@ -1,0 +1,49 @@
+type Mutation {
+  userLogin(
+    input: UserLoginInput!
+  ): UserLoginOutput
+}
+
+type Mutation {
+  userLogout: UserLogoutOutput
+}
+
+enum ERole {
+  SYSTEM
+  RESTAURANT_ADMIN
+  RESTAURANT_STAFF
+  USER
+}
+
+input UserLoginInput {
+  email: String!
+  password: String!
+}
+
+type IResponseAuthUser {
+  id: Int
+  email: String
+  role: ERole
+}
+
+type UserLoginOutputData {
+  user: IResponseAuthUser
+  accessToken: String!
+}
+
+type UserLoginOutput {
+  statusCode: Int
+  data: UserLoginOutputData
+  errorMessage: String
+  errorCode: String
+  timestamp: String
+}
+
+type UserLogoutOutput {
+  statusCode: Int
+  data: Boolean
+  errorMessage: String
+  errorCode: String
+  timestamp: String
+}
+
