@@ -17,6 +17,7 @@ export interface IJwtPayload {
   eml: string;
   rol: ERole;
   rid?: number | null;
+  [key: string]: unknown;
 }
 
 export interface IResponseRefreshToken {

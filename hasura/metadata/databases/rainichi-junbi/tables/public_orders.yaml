@@ -9,3 +9,100 @@ array_relationships:
         table:
           name: orderItems
           schema: public
+insert_permissions:
+  - role: RESTAURANT_ADMIN
+    permission:
+      check:
+        restaurantId:
+          _eq: x-hasura-restaurant-id
+      columns:
+        - createdAt
+        - creatorId
+        - deposit
+        - isDeleted
+        - restaurantId
+        - status
+        - total
+        - updatedAt
+    comment: ""
+  - role: RESTAURANT_STAFF
+    permission:
+      check:
+        restaurantId:
+          _eq: x-hasura-restaurant-id
+      columns:
+        - createdAt
+        - creatorId
+        - deposit
+        - restaurantId
+        - status
+        - total
+        - updatedAt
+    comment: ""
+select_permissions:
+  - role: RESTAURANT_ADMIN
+    permission:
+      columns:
+        - createdAt
+        - creatorId
+        - deposit
+        - id
+        - restaurantId
+        - status
+        - total
+        - updatedAt
+      filter:
+        _and:
+          - restaurantId:
+              _eq: x-hasura-restaurant-id
+          - isDeleted:
+              _eq: false
+    comment: ""
+  - role: RESTAURANT_STAFF
+    permission:
+      columns:
+        - createdAt
+        - creatorId
+        - deposit
+        - restaurantId
+        - status
+        - total
+        - updatedAt
+      filter:
+        _and:
+          - restaurantId:
+              _eq: x-hasura-restaurant-id
+          - isDeleted:
+              _eq: false
+    comment: ""
+update_permissions:
+  - role: RESTAURANT_ADMIN
+    permission:
+      columns:
+        - creatorId
+        - deposit
+        - isDeleted
+        - restaurantId
+        - status
+        - total
+        - updatedAt
+      filter:
+        restaurantId:
+          _eq: x-hasura-restaurant-id
+      check: null
+    comment: ""
+  - role: RESTAURANT_STAFF
+    permission:
+      columns:
+        - creatorId
+        - deposit
+        - isDeleted
+        - restaurantId
+        - status
+        - total
+        - updatedAt
+      filter:
+        restaurantId:
+          _eq: x-hasura-restaurant-id
+      check: null
+    comment: ""
