@@ -245,6 +245,12 @@ export class UserService {
       eml: authUserData.email,
       rol: authUserData.role,
       rid: authUserData.restaurantId,
+      'https://hasura.io/jwt/claims': {
+        'x-hasura-allowed-roles': [authUserData.role],
+        'x-hasura-default-role': authUserData.role,
+        'x-hasura-user-id': authUserData.id.toString(),
+        'x-hasura-restaurant-id': authUserData.restaurantId?.toString(),
+      },
     };
 
     const refreshToken = await this.jwtService.signAsync(payload, {

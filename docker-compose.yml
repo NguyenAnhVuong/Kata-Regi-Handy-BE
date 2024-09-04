@@ -29,12 +29,14 @@ services:
       HASURA_GRAPHQL_ENABLED_LOG_TYPES: ${HASURA_GRAPHQL_ENABLED_LOG_TYPES}
       ## uncomment next line to run console offline (i.e load console assets from server instead of CDN)
       # HASURA_GRAPHQL_CONSOLE_ASSETS_DIR: /srv/console-assets
+      HASURA_GRAPHQL_UNAUTHORIZED_ROLE: ${HASURA_GRAPHQL_UNAUTHORIZED_ROLE}
       ## uncomment next line to set an admin secret
-      # HASURA_GRAPHQL_ADMIN_SECRET: myadminsecretkey
+      HASURA_GRAPHQL_ADMIN_SECRET: ${HASURA_GRAPHQL_ADMIN_SECRET}
       HASURA_GRAPHQL_METADATA_DEFAULTS: ${HASURA_GRAPHQL_METADATA_DEFAULTS}
       HASURA_GRAPHQL_ENABLE_REMOTE_SCHEMA_PERMISSIONS: ${HASURA_GRAPHQL_ENABLE_REMOTE_SCHEMA_PERMISSIONS}
       ACTION_BASE_URL: ${ACTION_BASE_URL}
       MY_WEBHOOK_URL: ${MY_WEBHOOK_URL}
+      HASURA_GRAPHQL_JWT_SECRET: '{ "type": "HS256", "key": "${JWT_SECRET}" }'
     depends_on:
       data-connector-agent:
         condition: service_healthy

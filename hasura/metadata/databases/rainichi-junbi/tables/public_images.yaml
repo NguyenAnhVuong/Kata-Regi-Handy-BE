@@ -8,3 +8,90 @@ object_relationships:
   - name: restaurant
     using:
       foreign_key_constraint_on: restaurantId
+insert_permissions:
+  - role: RESTAURANT_ADMIN
+    permission:
+      check:
+        restaurantId:
+          _eq: x-hasura-restaurant-id
+      columns:
+        - createdAt
+        - menuId
+        - restaurantId
+        - updatedAt
+        - url
+    comment: ""
+  - role: RESTAURANT_STAFF
+    permission:
+      check:
+        restaurantId:
+          _eq: x-hasura-restaurant-id
+      columns:
+        - createdAt
+        - menuId
+        - restaurantId
+        - updatedAt
+        - url
+    comment: ""
+select_permissions:
+  - role: RESTAURANT_ADMIN
+    permission:
+      columns:
+        - isDeleted
+        - url
+        - id
+        - menuId
+        - restaurantId
+        - createdAt
+        - updatedAt
+      filter:
+        _and:
+          - restaurantId:
+              _eq: x-hasura-restaurant-id
+          - isDeleted:
+              _eq: false
+    comment: ""
+  - role: RESTAURANT_STAFF
+    permission:
+      columns:
+        - isDeleted
+        - url
+        - id
+        - menuId
+        - restaurantId
+        - createdAt
+        - updatedAt
+      filter:
+        _and:
+          - restaurantId:
+              _eq: x-hasura-restaurant-id
+          - isDeleted:
+              _eq: false
+    comment: ""
+update_permissions:
+  - role: RESTAURANT_ADMIN
+    permission:
+      columns:
+        - isDeleted
+        - menuId
+        - restaurantId
+        - updatedAt
+        - url
+      filter:
+        restaurantId:
+          _eq: x-hasura-restaurant-id
+      check: null
+    comment: ""
+  - role: RESTAURANT_STAFF
+    permission:
+      columns:
+        - isDeleted
+        - menuId
+        - restaurantId
+        - updatedAt
+        - url
+      filter:
+        restaurantId:
+          _eq: x-hasura-restaurant-id
+      check: null
+    comment: ""

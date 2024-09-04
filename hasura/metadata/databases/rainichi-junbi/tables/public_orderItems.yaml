@@ -8,3 +8,86 @@ object_relationships:
   - name: order
     using:
       foreign_key_constraint_on: orderId
+insert_permissions:
+  - role: RESTAURANT_ADMIN
+    permission:
+      check:
+        order:
+          restaurantId:
+            _eq: x-hasura-restaurant-id
+      columns:
+        - createdAt
+        - menuId
+        - orderId
+        - quantity
+        - updatedAt
+    comment: ""
+  - role: RESTAURANT_STAFF
+    permission:
+      check:
+        order:
+          restaurantId:
+            _eq: x-hasura-restaurant-id
+      columns:
+        - createdAt
+        - menuId
+        - orderId
+        - quantity
+        - updatedAt
+    comment: ""
+select_permissions:
+  - role: RESTAURANT_ADMIN
+    permission:
+      columns:
+        - id
+        - menuId
+        - orderId
+        - quantity
+        - createdAt
+        - updatedAt
+      filter:
+        order:
+          restaurantId:
+            _eq: x-hasura-restaurant-id
+    comment: ""
+  - role: RESTAURANT_STAFF
+    permission:
+      columns:
+        - id
+        - menuId
+        - orderId
+        - quantity
+        - createdAt
+        - updatedAt
+      filter:
+        order:
+          restaurantId:
+            _eq: x-hasura-restaurant-id
+    comment: ""
+update_permissions:
+  - role: RESTAURANT_ADMIN
+    permission:
+      columns:
+        - menuId
+        - orderId
+        - quantity
+        - updatedAt
+      filter:
+        order:
+          restaurantId:
+            _eq: x-hasura-restaurant-id
+      check: null
+    comment: ""
+  - role: RESTAURANT_STAFF
+    permission:
+      columns:
+        - menuId
+        - orderId
+        - quantity
+        - updatedAt
+      filter:
+        order:
+          restaurantId:
+            _eq: x-hasura-restaurant-id
+      check: null
+    comment: ""
