@@ -1,6 +1,10 @@
 table:
   name: orders
   schema: public
+object_relationships:
+  - name: table
+    using:
+      foreign_key_constraint_on: tableId
 array_relationships:
   - name: orderItems
     using:
@@ -13,29 +17,32 @@ insert_permissions:
   - role: RESTAURANT_ADMIN
     permission:
       check:
-        restaurantId:
-          _eq: x-hasura-restaurant-id
+        table:
+          restaurantId:
+            _eq: x-hasura-restaurant-id
       columns:
         - createdAt
-        - creatorId
         - deposit
+        - id
         - isDeleted
-        - restaurantId
         - status
+        - tableId
         - total
         - updatedAt
     comment: ""
   - role: RESTAURANT_STAFF
     permission:
       check:
-        restaurantId:
-          _eq: x-hasura-restaurant-id
+        table:
+          restaurantId:
+            _eq: x-hasura-restaurant-id
       columns:
         - createdAt
-        - creatorId
         - deposit
-        - restaurantId
+        - id
+        - isDeleted
         - status
+        - tableId
         - total
         - updatedAt
     comment: ""
@@ -43,66 +50,77 @@ select_permissions:
   - role: RESTAURANT_ADMIN
     permission:
       columns:
-        - createdAt
-        - creatorId
+        - isDeleted
         - deposit
         - id
-        - restaurantId
-        - status
+        - tableId
         - total
+        - createdAt
         - updatedAt
+        - status
       filter:
         _and:
-          - restaurantId:
-              _eq: x-hasura-restaurant-id
+          - table:
+              restaurantId:
+                _eq: x-hasura-restaurant-id
           - isDeleted:
               _eq: false
+      allow_aggregations: true
     comment: ""
   - role: RESTAURANT_STAFF
     permission:
       columns:
-        - createdAt
-        - creatorId
+        - isDeleted
         - deposit
-        - restaurantId
-        - status
+        - id
+        - tableId
         - total
+        - createdAt
         - updatedAt
+        - status
       filter:
         _and:
-          - restaurantId:
-              _eq: x-hasura-restaurant-id
+          - table:
+              restaurantId:
+                _eq: x-hasura-restaurant-id
           - isDeleted:
               _eq: false
+      allow_aggregations: true
     comment: ""
 update_permissions:
   - role: RESTAURANT_ADMIN
     permission:
       columns:
-        - creatorId
         - deposit
         - isDeleted
-        - restaurantId
         - status
+        - tableId
         - total
         - updatedAt
       filter:
-        restaurantId:
-          _eq: x-hasura-restaurant-id
+        _and:
+          - table:
+              restaurantId:
+                _eq: x-hasura-restaurant-id
+          - isDeleted:
+              _eq: false
       check: null
     comment: ""
   - role: RESTAURANT_STAFF
     permission:
       columns:
-        - creatorId
         - deposit
         - isDeleted
-        - restaurantId
         - status
+        - tableId
         - total
         - updatedAt
       filter:
-        restaurantId:
-          _eq: x-hasura-restaurant-id
+        _and:
+          - table:
+              restaurantId:
+                _eq: x-hasura-restaurant-id
+          - isDeleted:
+              _eq: false
       check: null
     comment: ""

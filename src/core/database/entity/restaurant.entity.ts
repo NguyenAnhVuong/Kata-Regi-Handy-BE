@@ -3,7 +3,7 @@ import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { User } from './user.entity';
 import { Menu } from './menu.entity';
 import { Image } from './image.entity';
-import { Vocher } from './vocher.entity';
+import { Table } from './table.entity';
 
 @Entity('restaurants')
 @ObjectType()
@@ -69,11 +69,12 @@ export class Restaurant {
   @Field(() => [Menu])
   menus: Menu[];
 
+  @OneToMany(() => Table, (table) => table.restaurant)
+  @Field(() => [Table])
+  tables: Table[];
+
   @OneToMany(() => Image, (image) => image.restaurant)
   @Field(() => [Image])
   images: Image[];
 
-  @OneToMany(() => Vocher, (vocher) => vocher.restaurant)
-  @Field(() => [Vocher])
-  vochers: Vocher[];
 }

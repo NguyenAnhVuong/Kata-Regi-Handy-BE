@@ -2,9 +2,6 @@ table:
   name: menus
   schema: public
 object_relationships:
-  - name: menuCategory
-    using:
-      foreign_key_constraint_on: categoryId
   - name: restaurant
     using:
       foreign_key_constraint_on: restaurantId
