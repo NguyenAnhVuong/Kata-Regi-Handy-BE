@@ -7,11 +7,10 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { MenuCategory } from './menuCategory.entity';
+
 import { OrderItem } from './orderItem.entity';
 import { Image } from './image.entity';
 import { Restaurant } from './restaurant.entity';
-import { VocherItem } from './vocherItem.entity';
 
 @Entity('menus')
 @ObjectType()
@@ -82,11 +81,6 @@ export class Menu {
   @JoinColumn({ name: 'restaurantId' })
   restaurant: Restaurant;
 
-  @ManyToOne(() => MenuCategory, (menuCategory) => menuCategory.menus)
-  @Field(() => MenuCategory)
-  @JoinColumn({ name: 'categoryId' })
-  menuCategory: MenuCategory;
-
   @OneToMany(() => OrderItem, (orderItem) => orderItem.menu)
   @Field(() => [OrderItem])
   orderItems: OrderItem[];
@@ -95,7 +89,4 @@ export class Menu {
   @Field(() => [Image])
   images: Image[];
 
-  @OneToMany(() => VocherItem, (vocherItem) => vocherItem.menu)
-  @Field(() => [VocherItem])
-  vocherItems: VocherItem[];
 }

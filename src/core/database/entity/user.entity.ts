@@ -9,9 +9,9 @@ import {
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { UserDetail } from './userDetail.entity';
+
 import { Restaurant } from './restaurant.entity';
-import { Vocher } from './vocher.entity';
+
 
 registerEnumType(ERole, {
   name: 'ERole',
@@ -71,17 +71,9 @@ export class User {
   @Field(() => Date)
   updatedAt: Date;
 
-  @OneToOne(() => UserDetail, (userDetail) => userDetail.user)
-  @JoinColumn({ name: 'userDetailId' })
-  @Field(() => UserDetail)
-  userDetail: UserDetail;
-
   @ManyToOne(() => Restaurant, (restaurant) => restaurant.users)
   @JoinColumn({ name: 'restaurantId' })
   @Field(() => Restaurant)
   restaurant: Restaurant;
 
-  @OneToMany(() => Vocher, (vocher) => vocher.user)
-  @Field(() => [Vocher])
-  vochers: Vocher[];
 }

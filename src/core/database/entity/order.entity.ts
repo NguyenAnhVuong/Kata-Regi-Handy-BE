@@ -13,14 +13,6 @@ export class Order {
   @Field(() => Int)
   id: number;
 
-  @Column({ name: 'creatorId', type: 'int', nullable: true })
-  @Field(() => Int, { nullable: true })
-  creatorId: number | null;
-
-  @Column({ name: 'restaurantId', type: 'int' })
-  @Field(() => Int)
-  restaurantId: number;
-
   @Column({ name: 'isDeleted', type: 'boolean', default: false })
   @Field(() => Boolean)
   isDeleted: boolean;

@@ -38,7 +38,7 @@ export class OrderService {
     const order = await this.orderEpository.findOne({
       where: {
         id: updateOrderInput.id,
-        restaurantId: userData.rid,
+        //restaurantId: userData.rid,
       },
     });
 
