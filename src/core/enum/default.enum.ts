@@ -57,3 +57,10 @@ export enum EBookingStatus {
   APPROVED = 'APPROVED',
   CANCEL = 'CANCEL',
 }
+
+export enum ETableStatus {
+  OPEN = 'OPEN',
+  INUSE = 'INUSE',
+  BOOKED = 'BOOKED',
+  GROUPED = "GROUPED"
+}

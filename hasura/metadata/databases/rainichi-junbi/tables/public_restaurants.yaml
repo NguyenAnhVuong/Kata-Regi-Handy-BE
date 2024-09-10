@@ -16,6 +16,13 @@ array_relationships:
         table:
           name: menus
           schema: public
+  - name: tables
+    using:
+      foreign_key_constraint_on:
+        column: restaurantId
+        table:
+          name: tables
+          schema: public
   - name: users
     using:
       foreign_key_constraint_on:

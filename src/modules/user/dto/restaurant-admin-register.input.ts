@@ -37,10 +37,10 @@ export class VRestaurantAdminRegisterInput {
   @Field(() => String)
   birthday: string;
 
-  @IsEnum(EGender)
-  @IsNotEmpty()
-  @Field(() => EGender)
-  gender: EGender;
+  // @IsEnum(EGender)
+  // @IsNotEmpty()
+  // @Field(() => EGender)
+  // gender: EGender;
 
   @Field(() => VCreateRestaurantInput)
   @ValidateNested()

@@ -6,7 +6,7 @@ import { VCreateMenuInput } from './dto/create-menu.input';
 import { IUserData } from '@core/interface/default.interface';
 import { VUpdateMenuInput } from './dto/update-menu.input';
 import { UserService } from '@modules/user/user.service';
-import { MenuCategoryService } from '@modules/menu-category/menu-category.service';
+//import { MenuCategoryService } from '@modules/menu-category/menu-category.service';
 import { RestaurantService } from '@modules/restaurant/restaurant.service';
 import { ErrorMessage } from '@core/enum';
 
@@ -16,7 +16,7 @@ export class MenuService {
     @InjectRepository(Menu)
     private readonly menuRepository: Repository<Menu>,
     private readonly restaurantService: RestaurantService,
-    private readonly menuCategoryService: MenuCategoryService,
+    //private readonly menuCategoryService: MenuCategoryService,
   ) {}
 
   async createMenu(userData: IUserData, createMenuInput: VCreateMenuInput) {
@@ -31,16 +31,16 @@ export class MenuService {
       );
     }
 
-    const menuCategory = await this.menuCategoryService.getMenuCategoryById(
-      createMenuInput.categoryId,
-    );
+    // const menuCategory = await this.menuCategoryService.getMenuCategoryById(
+    //   createMenuInput.categoryId,
+    // );
 
-    if (!menuCategory) {
-      throw new HttpException(
-        ErrorMessage.MENU_CATEGORY_NOT_EXISTS,
-        HttpStatus.BAD_REQUEST,
-      );
-    }
+    // if (!menuCategory) {
+    //   throw new HttpException(
+    //     ErrorMessage.MENU_CATEGORY_NOT_EXISTS,
+    //     HttpStatus.BAD_REQUEST,
+    //   );
+    // }
 
     const newMenu: DeepPartial<Menu> = {
       name: createMenuInput.name,

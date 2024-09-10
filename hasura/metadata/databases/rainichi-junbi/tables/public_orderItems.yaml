@@ -12,26 +12,38 @@ insert_permissions:
   - role: RESTAURANT_ADMIN
     permission:
       check:
-        order:
-          restaurantId:
-            _eq: x-hasura-restaurant-id
+        _and:
+          - menu:
+              restaurantId:
+                _eq: x-hasura-restaurant-id
+          - order:
+              table:
+                restaurantId:
+                  _eq: x-hasura-restaurant-id
       columns:
         - createdAt
         - menuId
         - orderId
+        - price
         - quantity
         - updatedAt
     comment: ""
   - role: RESTAURANT_STAFF
     permission:
       check:
-        order:
-          restaurantId:
-            _eq: x-hasura-restaurant-id
+        _and:
+          - menu:
+              restaurantId:
+                _eq: x-hasura-restaurant-id
+          - order:
+              table:
+                restaurantId:
+                  _eq: x-hasura-restaurant-id
       columns:
         - createdAt
         - menuId
         - orderId
+        - price
         - quantity
         - updatedAt
     comment: ""
@@ -39,16 +51,23 @@ select_permissions:
   - role: RESTAURANT_ADMIN
     permission:
       columns:
+        - createdAt
         - id
         - menuId
         - orderId
+        - price
         - quantity
-        - createdAt
         - updatedAt
       filter:
-        order:
-          restaurantId:
-            _eq: x-hasura-restaurant-id
+        _and:
+          - menu:
+              restaurantId:
+                _eq: x-hasura-restaurant-id
+          - order:
+              table:
+                restaurantId:
+                  _eq: x-hasura-restaurant-id
+      allow_aggregations: true
     comment: ""
   - role: RESTAURANT_STAFF
     permission:
@@ -56,13 +75,20 @@ select_permissions:
         - id
         - menuId
         - orderId
+        - price
         - quantity
         - createdAt
         - updatedAt
       filter:
-        order:
-          restaurantId:
-            _eq: x-hasura-restaurant-id
+        _and:
+          - menu:
+              restaurantId:
+                _eq: x-hasura-restaurant-id
+          - order:
+              table:
+                restaurantId:
+                  _eq: x-hasura-restaurant-id
+      allow_aggregations: true
     comment: ""
 update_permissions:
   - role: RESTAURANT_ADMIN
@@ -70,12 +96,18 @@ update_permissions:
       columns:
         - menuId
         - orderId
+        - price
         - quantity
         - updatedAt
       filter:
-        order:
-          restaurantId:
-            _eq: x-hasura-restaurant-id
+        _and:
+          - menu:
+              restaurantId:
+                _eq: x-hasura-restaurant-id
+          - order:
+              table:
+                restaurantId:
+                  _eq: x-hasura-restaurant-id
       check: null
     comment: ""
   - role: RESTAURANT_STAFF
@@ -83,11 +115,17 @@ update_permissions:
       columns:
         - menuId
         - orderId
+        - price
         - quantity
         - updatedAt
       filter:
-        order:
-          restaurantId:
-            _eq: x-hasura-restaurant-id
+        _and:
+          - menu:
+              restaurantId:
+                _eq: x-hasura-restaurant-id
+          - order:
+              table:
+                restaurantId:
+                  _eq: x-hasura-restaurant-id
       check: null
     comment: ""

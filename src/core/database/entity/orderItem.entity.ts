@@ -44,6 +44,10 @@ export class OrderItem {
   @Field(() => Date)
   updatedAt: Date;
 
+  @Column({ name: 'price', type: 'int'})
+  @Field(()=> Int)
+  price: number
+
   @ManyToOne(() => Order, (order) => order.orderItems)
   @Field(() => Order)
   @JoinColumn({ name: 'orderId' })

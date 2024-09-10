@@ -16,13 +16,13 @@ import {
   IResponseRefreshToken,
 } from 'src/core/global/auth/interface/auth.interface';
 import { DataSource, DeepPartial, EntityManager, Repository } from 'typeorm';
-import { UserDetailService } from './../user-detail/user-detail.service';
+//import { UserDetailService } from './../user-detail/user-detail.service';
 import { VSystemRegisterInput } from './dto/system-register.input';
 import { VUserLoginDto } from './dto/user-login.dto';
 import { VUserRegisterDto } from './dto/user-register.dto';
 import { VRestaurantAdminRegisterInput } from './dto/restaurant-admin-register.input';
 import { RestaurantService } from '@modules/restaurant/restaurant.service';
-import { UserDetail } from '@core/database/entity/userDetail.entity';
+//import { UserDetail } from '@core/database/entity/userDetail.entity';
 
 @Injectable()
 export class UserService {
@@ -31,7 +31,7 @@ export class UserService {
     private userRepository: Repository<User>,
     private jwtService: JwtService,
     private configService: ConfigService,
-    private userDetailService: UserDetailService,
+    //private userDetailService: UserDetailService,
     private dataSource: DataSource,
     private restaurantService: RestaurantService,
   ) {}
@@ -55,19 +55,19 @@ export class UserService {
     userRegister.password = hashPassword;
     return await this.dataSource.transaction(
       async (entityManager: EntityManager) => {
-        const userDetail = {
-          name: userRegister.name,
-          birthday: userRegister.birthday,
-          gender: userRegister.gender,
-        };
-        const newUserDetail = await this.userDetailService.createUserDetail(
-          userDetail,
-          entityManager,
-        );
+        // const userDetail = {
+        //   name: userRegister.name,
+        //   birthday: userRegister.birthday,
+        //   gender: userRegister.gender,
+        // };
+        // const newUserDetail = await this.userDetailService.createUserDetail(
+        //   userDetail,
+        //   entityManager,
+        // );
 
         const userRepository = entityManager.getRepository(User);
         const newUser = await userRepository.save({
-          userDetailId: newUserDetail.id,
+          //userDetailId: newUserDetail.id,
           ...userRegister,
         });
         delete newUser.password;
@@ -153,16 +153,16 @@ export class UserService {
           role: ERole.RESTAURANT_ADMIN,
         });
 
-        const userDetail: DeepPartial<UserDetail> = {
-          name: restaurantAdminRegister.name,
-          birthday: restaurantAdminRegister.birthday,
-          phone: restaurantAdminRegister.phone,
-          gender: restaurantAdminRegister.gender,
-        };
-        await this.userDetailService.createUserDetail(
-          userDetail,
-          entityManager,
-        );
+        // const userDetail: DeepPartial<UserDetail> = {
+        //   name: restaurantAdminRegister.name,
+        //   birthday: restaurantAdminRegister.birthday,
+        //   phone: restaurantAdminRegister.phone,
+        //   gender: restaurantAdminRegister.gender,
+        // };
+        // await this.userDetailService.createUserDetail(
+        //   userDetail,
+        //   entityManager,
+        // );
 
         return newUser;
       },
@@ -327,7 +327,7 @@ export class UserService {
       where: {
         id: userData.id,
       },
-      relations: ['userDetail'],
+      //relations: ['userDetail'],
     });
     return user;
   }

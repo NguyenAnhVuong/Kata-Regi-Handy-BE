@@ -20,8 +20,7 @@ export class OrderService {
       async (entityManager: EntityManager) => {
         const orderRepository = entityManager.getRepository(Order);
         const newOrder = await orderRepository.save({
-          restaurantId: userData.rid,
-          creatorId: userData.uid,
+          tableId: 1,
           total: createOrderInput.total,
         });
         await this.orderItemService.createOrderItems(
@@ -38,7 +37,7 @@ export class OrderService {
     const order = await this.orderEpository.findOne({
       where: {
         id: updateOrderInput.id,
-        restaurantId: userData.rid,
+        //restaurantId: userData.rid,
       },
     });
 
@@ -48,7 +47,7 @@ export class OrderService {
 
     return await this.orderEpository.update(
       { id: updateOrderInput.id },
-      { status: updateOrderInput.status, deposit: updateOrderInput.deposit },
+      { status: updateOrderInput.status },
     );
   }
 }

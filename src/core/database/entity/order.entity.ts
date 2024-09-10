@@ -1,7 +1,8 @@
 import { EOrderStatus } from '@core/enum';
 import { Field, Int, ObjectType, registerEnumType } from '@nestjs/graphql';
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { OrderItem } from './orderItem.entity';
+import { Table } from './table.entity';
 
 registerEnumType(EOrderStatus, {
   name: 'EOrderStatus',
@@ -12,14 +13,6 @@ export class Order {
   @PrimaryGeneratedColumn()
   @Field(() => Int)
   id: number;
-
-  @Column({ name: 'creatorId', type: 'int', nullable: true })
-  @Field(() => Int, { nullable: true })
-  creatorId: number | null;
-
-  @Column({ name: 'restaurantId', type: 'int' })
-  @Field(() => Int)
-  restaurantId: number;
 
   @Column({ name: 'isDeleted', type: 'boolean', default: false })
   @Field(() => Boolean)
@@ -33,14 +26,6 @@ export class Order {
   })
   @Field(() => EOrderStatus)
   status: EOrderStatus;
-
-  @Column({ name: 'total', type: 'int' })
-  @Field(() => Int)
-  total: number;
-
-  @Column({ name: 'deposit', type: 'int', nullable: true })
-  @Field(() => Int)
-  deposit: number;
 
   @Column({
     name: 'createdAt',
@@ -58,7 +43,17 @@ export class Order {
   @Field(() => Date)
   updatedAt: Date;
 
+  @Column({name: 'tableId', type: 'int'})
+  @Field(()=>Int)
+  tableId: number;
+
   @OneToMany(() => OrderItem, (orderItem) => orderItem.order)
   @Field(() => [OrderItem])
   orderItems: OrderItem[];
+
+  @ManyToOne(() => Table, (table) => table.orders)
+  @Field(() => Table)
+  @JoinColumn({name: 'tableId'})
+  table: Table;
+  
 }

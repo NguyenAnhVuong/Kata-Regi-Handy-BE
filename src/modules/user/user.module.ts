@@ -5,7 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { EConfiguration } from 'src/core/config/configuration.config';
 import { User } from 'src/core/database/entity/user.entity';
 import { JwtStrategy } from 'src/core/global/auth/strategy/jwt.strategy';
-import { UserDetailModule } from '../user-detail/user-detail.module';
+//import { UserDetailModule } from '../user-detail/user-detail.module';
 import { UserController } from './user.controller';
 import { UserService } from './user.service';
 import { UserResolver } from './user.resolver';
@@ -24,7 +24,7 @@ import { RestaurantModule } from '@modules/restaurant/restaurant.module';
         },
       }),
     }),
-    UserDetailModule,
+    //UserDetailModule,
     RestaurantModule,
   ],
   controllers: [UserController],

@@ -1,0 +1,65 @@
+table:
+  name: tables
+  schema: public
+object_relationships:
+  - name: restaurant
+    using:
+      foreign_key_constraint_on: restaurantId
+array_relationships:
+  - name: orders
+    using:
+      foreign_key_constraint_on:
+        column: tableId
+        table:
+          name: orders
+          schema: public
+select_permissions:
+  - role: RESTAURANT_ADMIN
+    permission:
+      columns:
+        - amountOpPeople
+        - id
+        - name
+        - openAt
+        - status
+      filter:
+        restaurantId:
+          _eq: x-hasura-restaurant-id
+      allow_aggregations: true
+    comment: ""
+  - role: RESTAURANT_STAFF
+    permission:
+      columns:
+        - amountOpPeople
+        - id
+        - name
+        - openAt
+        - status
+      filter:
+        restaurantId:
+          _eq: x-hasura-restaurant-id
+      allow_aggregations: true
+    comment: ""
+update_permissions:
+  - role: RESTAURANT_ADMIN
+    permission:
+      columns:
+        - amountOpPeople
+        - openAt
+        - status
+      filter:
+        restaurantId:
+          _eq: x-hasura-restaurant-id
+      check: null
+    comment: ""
+  - role: RESTAURANT_STAFF
+    permission:
+      columns:
+        - amountOpPeople
+        - openAt
+        - status
+      filter:
+        restaurantId:
+          _eq: x-hasura-restaurant-id
+      check: null
+    comment: ""
