@@ -172,7 +172,6 @@
           input CreateOrderItem {
             menuId: Int!
             orderId: Int
-            price: Int!
             quantity: Int!
           }
           input UpdateOrderInput {
@@ -266,7 +265,13 @@
             timestamp: String!
           }
           type Mutation {
+            createMenu(createMenuInput: VCreateMenuInput!): MenuRes!
             createOrder(createOrderInput: CreateOrderInput!): CreateRes!
+            deleteMenu(id: Int!): UpdateRes!
+            restaurantAdminRegister(restaurantAdminRegisterInput: VRestaurantAdminRegisterInput!): UserRes!
+            systemRegister(systemRegisterInput: VSystemRegisterInput!): UserRes!
+            updateMenu(updateMenuInput: VUpdateMenuInput!): UpdateRes!
+            updateOrder(updateOrderInput: UpdateOrderInput!): UpdateRes!
           }
           type Order {
             createdAt: DateTime!
@@ -373,7 +378,6 @@
           input CreateOrderItem {
             menuId: Int!
             orderId: Int
-            price: Int!
             quantity: Int!
           }
           input UpdateOrderInput {
