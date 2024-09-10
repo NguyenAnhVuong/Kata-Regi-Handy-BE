@@ -1,5 +1,5 @@
 import { CreateOrderItem } from '@modules/order-item/dto/create-order-item.input';
-import { Field, InputType, Int } from '@nestjs/graphql';
+import { Field, InputType } from '@nestjs/graphql';
 import { Type } from 'class-transformer';
 import { IsArray, IsNotEmpty, IsNumber, ValidateNested } from 'class-validator';
 
@@ -12,7 +12,7 @@ export class CreateOrderInput {
   orderItems: CreateOrderItem[];
 
   @IsNumber()
+  @Field(() => Number)
   @IsNotEmpty()
-  @Field(() => Int)
-  total: number;
+  tableId: number;
 }

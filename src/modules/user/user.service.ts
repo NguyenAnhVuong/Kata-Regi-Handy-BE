@@ -55,19 +55,8 @@ export class UserService {
     userRegister.password = hashPassword;
     return await this.dataSource.transaction(
       async (entityManager: EntityManager) => {
-        // const userDetail = {
-        //   name: userRegister.name,
-        //   birthday: userRegister.birthday,
-        //   gender: userRegister.gender,
-        // };
-        // const newUserDetail = await this.userDetailService.createUserDetail(
-        //   userDetail,
-        //   entityManager,
-        // );
-
         const userRepository = entityManager.getRepository(User);
         const newUser = await userRepository.save({
-          //userDetailId: newUserDetail.id,
           ...userRegister,
         });
         delete newUser.password;
@@ -152,17 +141,6 @@ export class UserService {
           restaurantId: newRestaurant.id,
           role: ERole.RESTAURANT_ADMIN,
         });
-
-        // const userDetail: DeepPartial<UserDetail> = {
-        //   name: restaurantAdminRegister.name,
-        //   birthday: restaurantAdminRegister.birthday,
-        //   phone: restaurantAdminRegister.phone,
-        //   gender: restaurantAdminRegister.gender,
-        // };
-        // await this.userDetailService.createUserDetail(
-        //   userDetail,
-        //   entityManager,
-        // );
 
         return newUser;
       },

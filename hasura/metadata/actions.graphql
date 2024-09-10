@@ -8,6 +8,12 @@ type Mutation {
   userLogout: UserLogoutOutput
 }
 
+type Mutation {
+  userRegister(
+    input: UserRegisterInput!
+  ): UserRegisterOutput
+}
+
 enum ERole {
   SYSTEM
   RESTAURANT_ADMIN
@@ -18,6 +24,12 @@ enum ERole {
 input UserLoginInput {
   email: String!
   password: String!
+}
+
+input UserRegisterInput {
+  email: String!
+  password: String!
+  role: ERole!
 }
 
 type IResponseAuthUser {
@@ -42,6 +54,21 @@ type UserLoginOutput {
 type UserLogoutOutput {
   statusCode: Int
   data: Boolean
+  errorMessage: String
+  errorCode: String
+  timestamp: String
+}
+
+type UserRegisterOutputData {
+  id: Int!
+  email: String!
+  restaurantId: Int
+  role: ERole!
+}
+
+type UserRegisterOutput {
+  statusCode: Int
+  data: UserRegisterOutputData
   errorMessage: String
   errorCode: String
   timestamp: String

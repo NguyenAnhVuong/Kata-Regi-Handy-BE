@@ -17,4 +17,9 @@ export class CreateOrderItem {
   @IsNotEmpty()
   @Field(() => Int)
   quantity: number;
+
+  @IsNumber()
+  @IsNotEmpty()
+  @Field(() => Int)
+  price: number;
 }

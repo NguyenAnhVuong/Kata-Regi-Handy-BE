@@ -15,8 +15,7 @@ export class MenuService {
   constructor(
     @InjectRepository(Menu)
     private readonly menuRepository: Repository<Menu>,
-    private readonly restaurantService: RestaurantService,
-    //private readonly menuCategoryService: MenuCategoryService,
+    private readonly restaurantService: RestaurantService, //private readonly menuCategoryService: MenuCategoryService,
   ) {}
 
   async createMenu(userData: IUserData, createMenuInput: VCreateMenuInput) {
@@ -47,7 +46,6 @@ export class MenuService {
       avatar: createMenuInput.avatar,
       description: createMenuInput.description,
       price: createMenuInput.price,
-      categoryId: createMenuInput.categoryId,
       restaurantId: userData.rid,
       creatorId: userData.uid,
     };

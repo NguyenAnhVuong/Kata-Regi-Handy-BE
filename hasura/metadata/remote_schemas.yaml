@@ -5,3 +5,412 @@
     customization: {}
     forward_client_headers: true
   comment: ""
+  permissions:
+    - role: RESTAURANT_STAFF
+      definition:
+        schema: |
+          schema {
+            query: Query
+            mutation: Mutation
+          }
+          scalar DateTime
+          type AffectedResult {
+            affected: Int!
+          }
+          type CreateRes {
+            data: Boolean!
+            errorCode: String
+            errorMessage: String
+            statusCode: Int!
+            timestamp: String!
+          }
+          type Image {
+            createdAt: DateTime!
+            id: Int!
+            isDeleted: Boolean!
+            menu: Menu!
+            menuId: Int!
+            restaurant: Restaurant!
+            restaurantId: Int!
+            updatedAt: DateTime!
+            url: String!
+          }
+          type Menu {
+            avatar: String!
+            createdAt: DateTime!
+            creatorId: Int!
+            description: String
+            id: Int!
+            images: [Image!]!
+            isDeleted: Boolean!
+            isDisplay: Boolean!
+            name: String!
+            orderItems: [OrderItem!]!
+            price: Int!
+            restaurant: Restaurant!
+            restaurantId: Int!
+            updatedAt: DateTime!
+          }
+          type MenuRes {
+            data: Menu!
+            errorCode: String
+            errorMessage: String
+            statusCode: Int!
+            timestamp: String!
+          }
+          type Mutation {
+            createMenu(createMenuInput: VCreateMenuInput!): MenuRes!
+            createOrder(createOrderInput: CreateOrderInput!): CreateRes!
+            deleteMenu(id: Int!): UpdateRes!
+            restaurantAdminRegister(restaurantAdminRegisterInput: VRestaurantAdminRegisterInput!): UserRes!
+            systemRegister(systemRegisterInput: VSystemRegisterInput!): UserRes!
+            updateMenu(updateMenuInput: VUpdateMenuInput!): UpdateRes!
+            updateOrder(updateOrderInput: UpdateOrderInput!): UpdateRes!
+          }
+          type Order {
+            createdAt: DateTime!
+            id: Int!
+            isDeleted: Boolean!
+            orderItems: [OrderItem!]!
+            status: EOrderStatus!
+            table: Table!
+            tableId: Int!
+            updatedAt: DateTime!
+          }
+          type OrderItem {
+            createdAt: DateTime!
+            id: Int!
+            menu: Menu!
+            menuId: Int!
+            order: Order!
+            orderId: Int!
+            price: Int!
+            quantity: Int!
+            updatedAt: DateTime!
+          }
+          type Query {
+            getUser: UserRes!
+          }
+          type Restaurant {
+            address: String!
+            avatar: String!
+            createdAt: DateTime!
+            creatorId: Int!
+            description: String!
+            id: Int!
+            images: [Image!]!
+            isDeleted: Boolean!
+            menus: [Menu!]!
+            name: String!
+            phone: String!
+            tables: [Table!]!
+            updatedAt: DateTime!
+            users: [User!]!
+          }
+          type Table {
+            amountOfPeople: Int!
+            id: Int!
+            name: String!
+            openAt: DateTime!
+            orders: [Order!]!
+            restaurant: Restaurant!
+            restaurantId: Int!
+            status: ETableStatus!
+          }
+          type UpdateRes {
+            data: AffectedResult
+            errorCode: String
+            errorMessage: String
+            statusCode: Int!
+            timestamp: String!
+          }
+          type User {
+            createdAt: DateTime!
+            email: String!
+            id: Int!
+            isDeleted: Boolean!
+            refreshToken: String
+            restaurant: Restaurant!
+            restaurantId: Int
+            role: ERole!
+            updatedAt: DateTime!
+            userDetailId: Int
+          }
+          type UserRes {
+            data: User!
+            errorCode: String
+            errorMessage: String
+            statusCode: Int!
+            timestamp: String!
+          }
+          enum EOrderStatus {
+            CANCEL
+            COMPLETED
+            CONFIRMED
+            DELIVERED
+            PENDING
+            PREPARING
+            SERVED
+            SHIPPING
+          }
+          enum ERole {
+            RESTAURANT_ADMIN
+            RESTAURANT_STAFF
+            SYSTEM
+            USER
+          }
+          enum ETableStatus {
+            BOOKED
+            GROUPED
+            INUSE
+            OPEN
+          }
+          input CreateOrderInput {
+            orderItems: [CreateOrderItem!]!
+            tableId: Float!
+          }
+          input CreateOrderItem {
+            menuId: Int!
+            orderId: Int
+            price: Int!
+            quantity: Int!
+          }
+          input UpdateOrderInput {
+            deposit: Int!
+            id: Int!
+            status: EOrderStatus!
+          }
+          input VCreateMenuInput {
+            avatar: String
+            categoryId: Int!
+            description: String
+            name: String!
+            price: Int!
+          }
+          input VCreateRestaurantInput {
+            address: String!
+            avatar: String
+            description: String
+            name: String!
+            phone: String!
+          }
+          input VRestaurantAdminRegisterInput {
+            email: String!
+            password: String!
+            restaurant: VCreateRestaurantInput!
+          }
+          input VSystemRegisterInput {
+            email: String!
+            password: String!
+            systemRegisterCode: String!
+          }
+          input VUpdateMenuInput {
+            avatar: String
+            categoryId: Int
+            description: String
+            id: Int!
+            isDisplay: Boolean
+            name: String
+            price: Int
+          }
+    - role: RESTAURANT_ADMIN
+      definition:
+        schema: |
+          schema {
+            query: Query
+            mutation: Mutation
+          }
+          scalar DateTime
+          type AffectedResult {
+            affected: Int!
+          }
+          type CreateRes {
+            data: Boolean!
+            errorCode: String
+            errorMessage: String
+            statusCode: Int!
+            timestamp: String!
+          }
+          type Image {
+            createdAt: DateTime!
+            id: Int!
+            isDeleted: Boolean!
+            menu: Menu!
+            menuId: Int!
+            restaurant: Restaurant!
+            restaurantId: Int!
+            updatedAt: DateTime!
+            url: String!
+          }
+          type Menu {
+            avatar: String!
+            createdAt: DateTime!
+            creatorId: Int!
+            description: String
+            id: Int!
+            images: [Image!]!
+            isDeleted: Boolean!
+            isDisplay: Boolean!
+            name: String!
+            orderItems: [OrderItem!]!
+            price: Int!
+            restaurant: Restaurant!
+            restaurantId: Int!
+            updatedAt: DateTime!
+          }
+          type MenuRes {
+            data: Menu!
+            errorCode: String
+            errorMessage: String
+            statusCode: Int!
+            timestamp: String!
+          }
+          type Mutation {
+            createOrder(createOrderInput: CreateOrderInput!): CreateRes!
+          }
+          type Order {
+            createdAt: DateTime!
+            id: Int!
+            isDeleted: Boolean!
+            orderItems: [OrderItem!]!
+            status: EOrderStatus!
+            table: Table!
+            tableId: Int!
+            updatedAt: DateTime!
+          }
+          type OrderItem {
+            createdAt: DateTime!
+            id: Int!
+            menu: Menu!
+            menuId: Int!
+            order: Order!
+            orderId: Int!
+            price: Int!
+            quantity: Int!
+            updatedAt: DateTime!
+          }
+          type Query {
+            getUser: UserRes!
+          }
+          type Restaurant {
+            address: String!
+            avatar: String!
+            createdAt: DateTime!
+            creatorId: Int!
+            description: String!
+            id: Int!
+            images: [Image!]!
+            isDeleted: Boolean!
+            menus: [Menu!]!
+            name: String!
+            phone: String!
+            tables: [Table!]!
+            updatedAt: DateTime!
+            users: [User!]!
+          }
+          type Table {
+            amountOfPeople: Int!
+            id: Int!
+            name: String!
+            openAt: DateTime!
+            orders: [Order!]!
+            restaurant: Restaurant!
+            restaurantId: Int!
+            status: ETableStatus!
+          }
+          type UpdateRes {
+            data: AffectedResult
+            errorCode: String
+            errorMessage: String
+            statusCode: Int!
+            timestamp: String!
+          }
+          type User {
+            createdAt: DateTime!
+            email: String!
+            id: Int!
+            isDeleted: Boolean!
+            refreshToken: String
+            restaurant: Restaurant!
+            restaurantId: Int
+            role: ERole!
+            updatedAt: DateTime!
+            userDetailId: Int
+          }
+          type UserRes {
+            data: User!
+            errorCode: String
+            errorMessage: String
+            statusCode: Int!
+            timestamp: String!
+          }
+          enum EOrderStatus {
+            CANCEL
+            COMPLETED
+            CONFIRMED
+            DELIVERED
+            PENDING
+            PREPARING
+            SERVED
+            SHIPPING
+          }
+          enum ERole {
+            RESTAURANT_ADMIN
+            RESTAURANT_STAFF
+            SYSTEM
+            USER
+          }
+          enum ETableStatus {
+            BOOKED
+            GROUPED
+            INUSE
+            OPEN
+          }
+          input CreateOrderInput {
+            orderItems: [CreateOrderItem!]!
+            tableId: Float!
+          }
+          input CreateOrderItem {
+            menuId: Int!
+            orderId: Int
+            price: Int!
+            quantity: Int!
+          }
+          input UpdateOrderInput {
+            deposit: Int!
+            id: Int!
+            status: EOrderStatus!
+          }
+          input VCreateMenuInput {
+            avatar: String
+            categoryId: Int!
+            description: String
+            name: String!
+            price: Int!
+          }
+          input VCreateRestaurantInput {
+            address: String!
+            avatar: String
+            description: String
+            name: String!
+            phone: String!
+          }
+          input VRestaurantAdminRegisterInput {
+            email: String!
+            password: String!
+            restaurant: VCreateRestaurantInput!
+          }
+          input VSystemRegisterInput {
+            email: String!
+            password: String!
+            systemRegisterCode: String!
+          }
+          input VUpdateMenuInput {
+            avatar: String
+            categoryId: Int
+            description: String
+            id: Int!
+            isDisplay: Boolean
+            name: String
+            price: Int
+          }

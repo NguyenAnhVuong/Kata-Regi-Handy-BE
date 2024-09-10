@@ -5,7 +5,7 @@ import {
   JoinColumn,
   ManyToOne,
   OneToMany,
-  PrimaryGeneratedColumn
+  PrimaryGeneratedColumn,
 } from 'typeorm';
 
 import { Restaurant } from './restaurant.entity';
@@ -13,8 +13,8 @@ import { ETableStatus } from '@core/enum';
 import { Order } from './order.entity';
 
 registerEnumType(ETableStatus, {
-    name: 'ETableStatus',
-  });
+  name: 'ETableStatus',
+});
 
 @Entity('tables')
 @ObjectType()
@@ -59,6 +59,5 @@ export class Table {
 
   @OneToMany(() => Order, (order) => order.table)
   @Field(() => [Order])
-  orders: Order[]
-
+  orders: Order[];
 }
