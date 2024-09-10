@@ -30,10 +30,3 @@ array_relationships:
         table:
           name: users
           schema: public
-  - name: vochers
-    using:
-      foreign_key_constraint_on:
-        column: restaurantId
-        table:
-          name: vochers
-          schema: public

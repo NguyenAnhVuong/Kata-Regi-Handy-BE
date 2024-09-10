@@ -48,10 +48,6 @@ export class Menu {
   @Field(() => Boolean)
   isDeleted: boolean;
 
-  @Column({ name: 'categoryId', type: 'int' })
-  @Field(() => Int)
-  categoryId: number;
-
   @Column({ name: 'restaurantId', type: 'int' })
   @Field(() => Int)
   restaurantId: number;
@@ -88,5 +84,4 @@ export class Menu {
   @OneToMany(() => Image, (image) => image.menu)
   @Field(() => [Image])
   images: Image[];
-
 }

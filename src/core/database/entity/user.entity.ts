@@ -5,13 +5,10 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
-  OneToMany,
-  OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
 import { Restaurant } from './restaurant.entity';
-
 
 registerEnumType(ERole, {
   name: 'ERole',
@@ -75,5 +72,4 @@ export class User {
   @JoinColumn({ name: 'restaurantId' })
   @Field(() => Restaurant)
   restaurant: Restaurant;
-
 }

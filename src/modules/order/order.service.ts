@@ -11,21 +11,21 @@ import { UpdateOrderInput } from './dto/update-order.input';
 export class OrderService {
   constructor(
     @InjectRepository(Order)
-    private readonly orderEpository: Repository<Order>,
+    private readonly orderRepository: Repository<Order>,
     private readonly dataSource: DataSource,
     private readonly orderItemService: OrderItemService,
   ) {}
-  async createOrder(userData: IUserData, createOrderInput: CreateOrderInput) {
+  async createOrder(createOrderInput: CreateOrderInput) {
     return await this.dataSource.transaction(
       async (entityManager: EntityManager) => {
+        const { tableId, orderItems } = createOrderInput;
         const orderRepository = entityManager.getRepository(Order);
         const newOrder = await orderRepository.save({
-          tableId: 1,
-          total: createOrderInput.total,
+          tableId,
         });
         await this.orderItemService.createOrderItems(
           newOrder.id,
-          createOrderInput.orderItems,
+          orderItems,
           entityManager,
         );
         return true;
@@ -34,7 +34,7 @@ export class OrderService {
   }
 
   async updateOrder(userData: IUserData, updateOrderInput: UpdateOrderInput) {
-    const order = await this.orderEpository.findOne({
+    const order = await this.orderRepository.findOne({
       where: {
         id: updateOrderInput.id,
         //restaurantId: userData.rid,
@@ -45,7 +45,7 @@ export class OrderService {
       return false;
     }
 
-    return await this.orderEpository.update(
+    return await this.orderRepository.update(
       { id: updateOrderInput.id },
       { status: updateOrderInput.status },
     );

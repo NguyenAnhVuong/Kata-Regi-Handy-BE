@@ -15,11 +15,8 @@ export class CreateOrderResolver {
 
   @GQLRoles([ERole.RESTAURANT_STAFF, ERole.RESTAURANT_ADMIN])
   @Mutation(() => CreateRes, { name: 'createOrder' })
-  createOrder(
-    @GQLUserData() userData: IUserData,
-    @Args('createOrderInput') createOrderInput: CreateOrderInput,
-  ) {
-    return this.orderService.createOrder(userData, createOrderInput);
+  createOrder(@Args('createOrderInput') createOrderInput: CreateOrderInput) {
+    return this.orderService.createOrder(createOrderInput);
   }
 
   @GQLRoles([ERole.RESTAURANT_STAFF, ERole.RESTAURANT_ADMIN])

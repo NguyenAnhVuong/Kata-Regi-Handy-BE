@@ -76,5 +76,4 @@ export class Restaurant {
   @OneToMany(() => Image, (image) => image.restaurant)
   @Field(() => [Image])
   images: Image[];
-
 }
