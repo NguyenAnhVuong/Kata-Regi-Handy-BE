@@ -8,6 +8,7 @@ import { IUserData } from '@core/interface/default.interface';
 import { UpdateOrderInput } from './dto/update-order.input';
 import { MenuService } from '@modules/menu/menu.service';
 import { ErrorMessage } from '@core/enum';
+import { EOrderStatus } from '@core/enum';
 
 @Injectable()
 export class OrderService {
@@ -17,7 +18,7 @@ export class OrderService {
     private readonly dataSource: DataSource,
     private readonly orderItemService: OrderItemService,
     private readonly menuService: MenuService,
-  ) {}
+  ) { }
   async createOrder(createOrderInput: CreateOrderInput) {
     return await this.dataSource.transaction(
       async (entityManager: EntityManager) => {
@@ -73,4 +74,19 @@ export class OrderService {
       { status: updateOrderInput.status },
     );
   }
+
+  async updateStatusMany(tableId: number, entityManager: EntityManager) {
+
+    const listIds = await entityManager.getRepository(Order).createQueryBuilder('order')
+      .where('order.tableId = :tableId', { tableId })
+      .andWhere('order.status != :status', { status: EOrderStatus.COMPLETED })
+      .select('order.id')
+      .getMany()
+
+    return await entityManager.createQueryBuilder().update(Order)
+      .set({ status: EOrderStatus.COMPLETED })
+      .whereInIds(listIds)
+      .execute()
+  }
+
 }

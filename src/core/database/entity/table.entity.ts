@@ -47,9 +47,9 @@ export class Table {
   @Column({
     name: 'openAt',
     type: 'timestamp',
-    default: () => 'CURRENT_TIMESTAMP',
+    nullable: true
   })
-  @Field(() => Date)
+  @Field(() => Date, {nullable: true})
   openAt: Date;
 
   @ManyToOne(() => Restaurant, (restaurant) => restaurant.tables)

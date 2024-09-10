@@ -9,5 +9,6 @@ import { MenuModule } from '@modules/menu/menu.module';
 @Module({
   imports: [TypeOrmModule.forFeature([Order]), OrderItemModule, MenuModule],
   providers: [CreateOrderResolver, OrderService],
+  exports: [OrderService]
 })
 export class OrderModule {}

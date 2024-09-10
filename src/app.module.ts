@@ -22,6 +22,7 @@ import { RestaurantModule } from '@modules/restaurant/restaurant.module';
 import { MenuModule } from '@modules/menu/menu.module';
 import { OrderModule } from '@modules/order/order.module';
 import { OrderItemModule } from '@modules/order-item/order-item.module';
+import { TableModule } from '@modules/table/table.module';
 
 @Module({
   imports: [
@@ -60,6 +61,7 @@ import { OrderItemModule } from '@modules/order-item/order-item.module';
     MenuModule,
     OrderModule,
     OrderItemModule,
+    TableModule
   ],
   controllers: [AppController],
   providers: [

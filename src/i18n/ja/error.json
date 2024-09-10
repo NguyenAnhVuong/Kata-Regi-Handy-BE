@@ -7,5 +7,6 @@
   "INVALID_PARAM": "Thông số không hợp lệ",
   "SYSTEM_REGISTER_CODE_INCORRECT": "Mã đăng ký quản trị không chính xác",
   "RESTAURANT_NOT_EXISTS": "Restaurant not exists",
-  "MENU_CATEGORY_NOT_EXISTS": "Menu category not exists"
+  "MENU_CATEGORY_NOT_EXISTS": "Menu category not exists",
+  "TABLE_DOES_NOT_EXISTS": "Table does not exists"
 }
