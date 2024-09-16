@@ -1,14 +1,13 @@
 import { Menu } from '@core/database/entity/menu.entity';
+import { IUserData } from '@core/interface/default.interface';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DeepPartial, Repository } from 'typeorm';
+import { DeepPartial, EntityManager, Repository } from 'typeorm';
 import { VCreateMenuInput } from './dto/create-menu.input';
-import { IUserData } from '@core/interface/default.interface';
 import { VUpdateMenuInput } from './dto/update-menu.input';
-import { UserService } from '@modules/user/user.service';
 //import { MenuCategoryService } from '@modules/menu-category/menu-category.service';
-import { RestaurantService } from '@modules/restaurant/restaurant.service';
 import { ErrorMessage } from '@core/enum';
+import { RestaurantService } from '@modules/restaurant/restaurant.service';
 
 @Injectable()
 export class MenuService {
@@ -17,6 +16,19 @@ export class MenuService {
     private readonly menuRepository: Repository<Menu>,
     private readonly restaurantService: RestaurantService, //private readonly menuCategoryService: MenuCategoryService,
   ) {}
+
+  async getMenuById(id: number, entityManager?: EntityManager) {
+    const menuRepository = entityManager
+      ? entityManager.getRepository(Menu)
+      : this.menuRepository;
+
+    return await menuRepository.findOne({
+      where: {
+        id,
+        isDeleted: false,
+      },
+    });
+  }
 
   async createMenu(userData: IUserData, createMenuInput: VCreateMenuInput) {
     const restaurant = await this.restaurantService.getRestaurantById(
