@@ -3,8 +3,8 @@ import { GQLResponse } from './gqlRes.entity';
 
 @ObjectType()
 class AffectedResult {
-  @Field(() => Int)
-  affected: number;
+  @Field(() => Int, {nullable: true})
+  affected: number | null;
 }
 
 @ObjectType()

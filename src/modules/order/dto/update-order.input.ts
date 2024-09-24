@@ -14,8 +14,8 @@ export class UpdateOrderInput {
   @Field(() => EOrderStatus)
   status: EOrderStatus;
 
-  @IsNumber()
-  @IsNotEmpty()
-  @Field(() => Int)
-  deposit: number;
+  // @IsNumber()
+  // @IsNotEmpty()
+  // @Field(() => Int)
+  // deposit: number;
 }
