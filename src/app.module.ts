@@ -47,7 +47,7 @@ import { TableModule } from '@modules/table/table.module';
         password: configService.get(EConfiguration.DB_POSTGRESQL_PASSWORD),
         database: configService.get(EConfiguration.DB_POSTGRESQL_DB),
         entities: [__dirname + '/**/*.entity.{ts,js}'],
-        synchronize: true,
+        synchronize: false,
         autoLoadEntities: true,
         migrations: ['src/core/database/migrations/**/*.ts'],
         subscribers: ['src/subscriber/**/*.ts'],

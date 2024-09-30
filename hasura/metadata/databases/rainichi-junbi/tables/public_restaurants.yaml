@@ -30,3 +30,77 @@ array_relationships:
         table:
           name: users
           schema: public
+select_permissions:
+  - role: RESTAURANT_ADMIN
+    permission:
+      columns:
+        - isDeleted
+        - address
+        - avatar
+        - name
+        - phone
+        - creatorId
+        - id
+        - description
+        - createdAt
+        - updatedAt
+      filter:
+        id:
+          _eq: x-hasura-restaurant-id
+      allow_aggregations: true
+    comment: ""
+  - role: RESTAURANT_STAFF
+    permission:
+      columns:
+        - isDeleted
+        - address
+        - avatar
+        - name
+        - phone
+        - creatorId
+        - id
+        - description
+        - createdAt
+        - updatedAt
+      filter:
+        id:
+          _eq: x-hasura-restaurant-id
+      allow_aggregations: true
+    comment: ""
+update_permissions:
+  - role: RESTAURANT_ADMIN
+    permission:
+      columns:
+        - isDeleted
+        - address
+        - avatar
+        - name
+        - phone
+        - creatorId
+        - id
+        - description
+        - createdAt
+        - updatedAt
+      filter:
+        id:
+          _eq: x-hasura-restaurant-id
+      check: null
+    comment: ""
+  - role: RESTAURANT_STAFF
+    permission:
+      columns:
+        - isDeleted
+        - address
+        - avatar
+        - name
+        - phone
+        - creatorId
+        - id
+        - description
+        - createdAt
+        - updatedAt
+      filter:
+        id:
+          _eq: x-hasura-restaurant-id
+      check: null
+    comment: ""

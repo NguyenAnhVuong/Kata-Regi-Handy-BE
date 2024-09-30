@@ -15,10 +15,24 @@
           }
           scalar DateTime
           type AffectedResult {
-            affected: Int!
+            affected: Int
           }
           type CreateRes {
             data: Boolean!
+            errorCode: String
+            errorMessage: String
+            statusCode: Int!
+            timestamp: String!
+          }
+          type GetTablesRes {
+            data: [TableInfo!]!
+            errorCode: String
+            errorMessage: String
+            statusCode: Int!
+            timestamp: String!
+          }
+          type GetUnpaidTablesRes {
+            data: [UnpaidTableInfo!]!
             errorCode: String
             errorMessage: String
             statusCode: Int!
@@ -61,11 +75,13 @@
           type Mutation {
             createMenu(createMenuInput: VCreateMenuInput!): MenuRes!
             createOrder(createOrderInput: CreateOrderInput!): CreateRes!
+            createPayment(createPaymentInput: CreatePaymentInput!): UpdateRes!
             deleteMenu(id: Int!): UpdateRes!
             restaurantAdminRegister(restaurantAdminRegisterInput: VRestaurantAdminRegisterInput!): UserRes!
             systemRegister(systemRegisterInput: VSystemRegisterInput!): UserRes!
             updateMenu(updateMenuInput: VUpdateMenuInput!): UpdateRes!
             updateOrder(updateOrderInput: UpdateOrderInput!): UpdateRes!
+            updateTable(updateTableInput: UpdateTableInput!): UpdateRes!
           }
           type Order {
             createdAt: DateTime!
@@ -89,6 +105,8 @@
             updatedAt: DateTime!
           }
           type Query {
+            getTables: GetTablesRes!
+            getUnpaidTables: GetUnpaidTablesRes!
             getUser: UserRes!
           }
           type Restaurant {
@@ -111,11 +129,33 @@
             amountOfPeople: Int!
             id: Int!
             name: String!
-            openAt: DateTime!
+            openAt: DateTime
             orders: [Order!]!
             restaurant: Restaurant!
             restaurantId: Int!
             status: ETableStatus!
+          }
+          type TableInfo {
+            amountOfPeople: Int!
+            id: Int!
+            name: String!
+            openAt: DateTime
+            orders: [Order!]!
+            restaurant: Restaurant!
+            restaurantId: Int!
+            status: ETableStatus!
+            total: Float!
+          }
+          type UnpaidTableInfo {
+            amountOfPeople: Int!
+            id: Int!
+            name: String!
+            openAt: DateTime
+            orders: [Order!]!
+            restaurant: Restaurant!
+            restaurantId: Int!
+            status: ETableStatus!
+            total: Float!
           }
           type UpdateRes {
             data: AffectedResult
@@ -174,10 +214,17 @@
             orderId: Int
             quantity: Int!
           }
+          input CreatePaymentInput {
+            tableId: Int!
+          }
           input UpdateOrderInput {
-            deposit: Int!
             id: Int!
             status: EOrderStatus!
+          }
+          input UpdateTableInput {
+            amountOfPeople: Int!
+            status: ETableStatus!
+            tableId: Int!
           }
           input VCreateMenuInput {
             avatar: String
@@ -221,10 +268,24 @@
           }
           scalar DateTime
           type AffectedResult {
-            affected: Int!
+            affected: Int
           }
           type CreateRes {
             data: Boolean!
+            errorCode: String
+            errorMessage: String
+            statusCode: Int!
+            timestamp: String!
+          }
+          type GetTablesRes {
+            data: [TableInfo!]!
+            errorCode: String
+            errorMessage: String
+            statusCode: Int!
+            timestamp: String!
+          }
+          type GetUnpaidTablesRes {
+            data: [UnpaidTableInfo!]!
             errorCode: String
             errorMessage: String
             statusCode: Int!
@@ -267,11 +328,13 @@
           type Mutation {
             createMenu(createMenuInput: VCreateMenuInput!): MenuRes!
             createOrder(createOrderInput: CreateOrderInput!): CreateRes!
+            createPayment(createPaymentInput: CreatePaymentInput!): UpdateRes!
             deleteMenu(id: Int!): UpdateRes!
             restaurantAdminRegister(restaurantAdminRegisterInput: VRestaurantAdminRegisterInput!): UserRes!
             systemRegister(systemRegisterInput: VSystemRegisterInput!): UserRes!
             updateMenu(updateMenuInput: VUpdateMenuInput!): UpdateRes!
             updateOrder(updateOrderInput: UpdateOrderInput!): UpdateRes!
+            updateTable(updateTableInput: UpdateTableInput!): UpdateRes!
           }
           type Order {
             createdAt: DateTime!
@@ -295,6 +358,8 @@
             updatedAt: DateTime!
           }
           type Query {
+            getTables: GetTablesRes!
+            getUnpaidTables: GetUnpaidTablesRes!
             getUser: UserRes!
           }
           type Restaurant {
@@ -317,11 +382,33 @@
             amountOfPeople: Int!
             id: Int!
             name: String!
-            openAt: DateTime!
+            openAt: DateTime
             orders: [Order!]!
             restaurant: Restaurant!
             restaurantId: Int!
             status: ETableStatus!
+          }
+          type TableInfo {
+            amountOfPeople: Int!
+            id: Int!
+            name: String!
+            openAt: DateTime
+            orders: [Order!]!
+            restaurant: Restaurant!
+            restaurantId: Int!
+            status: ETableStatus!
+            total: Float!
+          }
+          type UnpaidTableInfo {
+            amountOfPeople: Int!
+            id: Int!
+            name: String!
+            openAt: DateTime
+            orders: [Order!]!
+            restaurant: Restaurant!
+            restaurantId: Int!
+            status: ETableStatus!
+            total: Float!
           }
           type UpdateRes {
             data: AffectedResult
@@ -380,10 +467,17 @@
             orderId: Int
             quantity: Int!
           }
+          input CreatePaymentInput {
+            tableId: Int!
+          }
           input UpdateOrderInput {
-            deposit: Int!
             id: Int!
             status: EOrderStatus!
+          }
+          input UpdateTableInput {
+            amountOfPeople: Int!
+            status: ETableStatus!
+            tableId: Int!
           }
           input VCreateMenuInput {
             avatar: String

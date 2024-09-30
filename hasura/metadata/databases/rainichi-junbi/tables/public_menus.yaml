@@ -20,18 +20,114 @@ array_relationships:
         table:
           name: orderItems
           schema: public
+insert_permissions:
+  - role: RESTAURANT_ADMIN
+    permission:
+      check: {}
+      columns:
+        - isDeleted
+        - isDisplay
+        - avatar
+        - name
+        - creatorId
+        - id
+        - price
+        - restaurantId
+        - description
+        - createdAt
+        - updatedAt
+    comment: ""
+  - role: RESTAURANT_STAFF
+    permission:
+      check: {}
+      columns:
+        - isDeleted
+        - isDisplay
+        - avatar
+        - name
+        - creatorId
+        - id
+        - price
+        - restaurantId
+        - description
+        - createdAt
+        - updatedAt
+    comment: ""
 select_permissions:
   - role: RESTAURANT_ADMIN
     permission:
       columns:
-        - avatar
-        - creatorId
-        - description
-        - id
+        - isDeleted
         - isDisplay
+        - avatar
         - name
+        - creatorId
+        - id
         - price
+        - restaurantId
+        - description
+        - createdAt
+        - updatedAt
       filter:
         restaurantId:
           _eq: x-hasura-restaurant-id
+      allow_aggregations: true
+    comment: ""
+  - role: RESTAURANT_STAFF
+    permission:
+      columns:
+        - isDeleted
+        - isDisplay
+        - avatar
+        - name
+        - creatorId
+        - id
+        - price
+        - restaurantId
+        - description
+        - createdAt
+        - updatedAt
+      filter:
+        restaurantId:
+          _eq: x-hasura-restaurant-id
+      allow_aggregations: true
+    comment: ""
+update_permissions:
+  - role: RESTAURANT_ADMIN
+    permission:
+      columns:
+        - isDeleted
+        - isDisplay
+        - avatar
+        - name
+        - creatorId
+        - id
+        - price
+        - restaurantId
+        - description
+        - createdAt
+        - updatedAt
+      filter:
+        restaurantId:
+          _eq: x-hasura-restaurant-id
+      check: null
+    comment: ""
+  - role: RESTAURANT_STAFF
+    permission:
+      columns:
+        - isDeleted
+        - isDisplay
+        - avatar
+        - name
+        - creatorId
+        - id
+        - price
+        - restaurantId
+        - description
+        - createdAt
+        - updatedAt
+      filter:
+        restaurantId:
+          _eq: x-hasura-restaurant-id
+      check: null
     comment: ""

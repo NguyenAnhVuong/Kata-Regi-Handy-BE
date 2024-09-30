@@ -20,7 +20,6 @@ insert_permissions:
         - restaurantId
         - updatedAt
         - url
-      backend_only: true
     comment: ""
   - role: RESTAURANT_STAFF
     permission:
