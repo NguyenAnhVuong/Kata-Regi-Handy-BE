@@ -13,3 +13,76 @@ array_relationships:
         table:
           name: orderItems
           schema: public
+insert_permissions:
+  - role: RESTAURANT_ADMIN
+    permission:
+      check: {}
+      columns:
+        - isDeleted
+        - id
+        - tableId
+        - createdAt
+        - updatedAt
+        - status
+    comment: ""
+  - role: RESTAURANT_STAFF
+    permission:
+      check: {}
+      columns:
+        - isDeleted
+        - id
+        - tableId
+        - createdAt
+        - updatedAt
+        - status
+    comment: ""
+select_permissions:
+  - role: RESTAURANT_ADMIN
+    permission:
+      columns:
+        - isDeleted
+        - id
+        - tableId
+        - createdAt
+        - updatedAt
+        - status
+      filter: {}
+      allow_aggregations: true
+    comment: ""
+  - role: RESTAURANT_STAFF
+    permission:
+      columns:
+        - isDeleted
+        - id
+        - tableId
+        - createdAt
+        - updatedAt
+        - status
+      filter: {}
+      allow_aggregations: true
+    comment: ""
+update_permissions:
+  - role: RESTAURANT_ADMIN
+    permission:
+      columns:
+        - isDeleted
+        - id
+        - tableId
+        - createdAt
+        - updatedAt
+        - status
+      filter: {}
+      check: null
+    comment: ""
+  - role: RESTAURANT_STAFF
+    permission:
+      columns:
+        - isDeleted
+        - id
+        - tableId
+        - createdAt
+        - updatedAt
+        - status
+      filter: {}
+      check: null
+    comment: ""

@@ -17,32 +17,39 @@ select_permissions:
   - role: RESTAURANT_ADMIN
     permission:
       columns:
+        - name
         - amountOfPeople
         - id
-        - name
+        - restaurantId
         - openAt
         - status
       filter:
         restaurantId:
           _eq: x-hasura-restaurant-id
+      allow_aggregations: true
     comment: ""
   - role: RESTAURANT_STAFF
     permission:
       columns:
+        - name
         - amountOfPeople
         - id
-        - name
+        - restaurantId
         - openAt
         - status
       filter:
         restaurantId:
           _eq: x-hasura-restaurant-id
+      allow_aggregations: true
     comment: ""
 update_permissions:
   - role: RESTAURANT_ADMIN
     permission:
       columns:
+        - name
         - amountOfPeople
+        - id
+        - restaurantId
         - openAt
         - status
       filter:
@@ -53,9 +60,14 @@ update_permissions:
   - role: RESTAURANT_STAFF
     permission:
       columns:
+        - name
         - amountOfPeople
+        - id
+        - restaurantId
         - openAt
         - status
-      filter: {}
+      filter:
+        restaurantId:
+          _eq: x-hasura-restaurant-id
       check: null
     comment: ""
