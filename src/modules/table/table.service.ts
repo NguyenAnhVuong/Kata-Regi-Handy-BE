@@ -33,7 +33,7 @@ export class TableService {
     .addSelect("table.status", "status")
     .addSelect("table.amountOfPeople", "amountOfPeople")
     .addSelect("table.openAt", "openAt")
-    .addSelect("COALESCE(SUM(CASE WHEN order.status != 'COMPLETED' THEN orderItem.price ELSE 0 END), 0)", "total")
+    .addSelect("COALESCE(SUM(CASE WHEN order.status != 'COMPLETED' THEN orderItem.price * orderItem.quantity ELSE 0 END), 0)", "total")
     .groupBy("table.id")
     .orderBy("table.id")
     .getRawMany();
@@ -52,7 +52,7 @@ export class TableService {
     .addSelect("table.status", "status")
     .addSelect("table.amountOfPeople", "amountOfPeople")
     .addSelect("table.openAt", "openAt")
-    .addSelect("COALESCE(SUM(CASE WHEN order.status != 'COMPLETED' THEN orderItem.price ELSE 0 END), 0)", "total")
+    .addSelect("COALESCE(SUM(CASE WHEN order.status != 'COMPLETED' THEN orderItem.price * orderItem.quantity ELSE 0 END), 0)", "total")
     .where("table.status = :inuseStatus", {inuseStatus: ETableStatus.INUSE})
     .groupBy("table.id")
     .orderBy("table.id")
