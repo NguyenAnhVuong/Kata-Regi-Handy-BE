@@ -11,6 +11,9 @@ actions:
       kind: synchronous
       handler: '{{ACTION_BASE_URL}}/api/user/logout'
       forward_client_headers: true
+    permissions:
+      - role: RESTAURANT_STAFF
+      - role: RESTAURANT_ADMIN
 custom_types:
   enums:
     - name: ERole
