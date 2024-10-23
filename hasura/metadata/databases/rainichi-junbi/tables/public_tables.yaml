@@ -2,6 +2,15 @@ table:
   name: tables
   schema: public
 object_relationships:
+  - name: group
+    using:
+      manual_configuration:
+        column_mapping:
+          groupId: id
+        insertion_order: null
+        remote_table:
+          name: tableGroups
+          schema: public
   - name: restaurant
     using:
       foreign_key_constraint_on: restaurantId
