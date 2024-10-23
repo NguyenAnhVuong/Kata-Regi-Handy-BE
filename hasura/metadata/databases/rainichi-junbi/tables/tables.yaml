@@ -3,5 +3,6 @@
 - "!include public_orderItems.yaml"
 - "!include public_orders.yaml"
 - "!include public_restaurants.yaml"
+- "!include public_tableGroups.yaml"
 - "!include public_tables.yaml"
 - "!include public_users.yaml"

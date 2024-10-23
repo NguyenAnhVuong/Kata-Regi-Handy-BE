@@ -11,6 +11,7 @@ import {
 import { Restaurant } from './restaurant.entity';
 import { ETableStatus } from '@core/enum';
 import { Order } from './order.entity';
+import { TableGroup } from './tableGroups.entity';
 
 registerEnumType(ETableStatus, {
   name: 'ETableStatus',
@@ -32,6 +33,14 @@ export class Table {
   restaurantId: number;
 
   @Column({
+    name: 'groupId',
+    type: 'int',
+    nullable: true,
+  })
+  @Field(() => Int, { nullable: true })
+  groupId: number;
+
+  @Column({
     name: 'status',
     type: 'enum',
     enum: ETableStatus,
@@ -47,9 +56,9 @@ export class Table {
   @Column({
     name: 'openAt',
     type: 'timestamp',
-    nullable: true
+    nullable: true,
   })
-  @Field(() => Date, {nullable: true})
+  @Field(() => Date, { nullable: true })
   openAt: Date;
 
   @ManyToOne(() => Restaurant, (restaurant) => restaurant.tables)
@@ -60,4 +69,11 @@ export class Table {
   @OneToMany(() => Order, (order) => order.table)
   @Field(() => [Order])
   orders: Order[];
+
+  @ManyToOne(() => TableGroup, (tableGroup) => tableGroup.tables, {
+    nullable: true,
+  })
+  @Field(() => TableGroup, { nullable: true })
+  @JoinColumn({ name: 'groupId' })
+  group: TableGroup;
 }
