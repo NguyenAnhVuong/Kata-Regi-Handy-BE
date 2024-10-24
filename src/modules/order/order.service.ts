@@ -2,7 +2,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateOrderInput } from './dto/create-order.input';
 import { Order } from '@core/database/entity/order.entity';
-import { DataSource, EntityManager, Repository } from 'typeorm';
+import { DataSource, EntityManager, In, Not, Repository } from 'typeorm';
 import { OrderItemService } from '@modules/order-item/order-item.service';
 import { IUserData } from '@core/interface/default.interface';
 import { UpdateOrderInput } from './dto/update-order.input';
@@ -18,7 +18,7 @@ export class OrderService {
     private readonly dataSource: DataSource,
     private readonly orderItemService: OrderItemService,
     private readonly menuService: MenuService,
-  ) { }
+  ) {}
   async createOrder(createOrderInput: CreateOrderInput) {
     return await this.dataSource.transaction(
       async (entityManager: EntityManager) => {
@@ -76,17 +76,33 @@ export class OrderService {
   }
 
   async updateStatusMany(tableId: number, entityManager: EntityManager) {
-
-    const listIds = await entityManager.getRepository(Order).createQueryBuilder('order')
+    const listIds = await entityManager
+      .getRepository(Order)
+      .createQueryBuilder('order')
       .where('order.tableId = :tableId', { tableId })
       .andWhere('order.status != :status', { status: EOrderStatus.COMPLETED })
       .select('order.id')
-      .getMany()
+      .getMany();
 
-    return await entityManager.createQueryBuilder().update(Order)
+    return await entityManager
+      .createQueryBuilder()
+      .update(Order)
       .set({ status: EOrderStatus.COMPLETED })
       .whereInIds(listIds)
-      .execute()
+      .execute();
   }
 
+  async updateInCompleteOrderByTableIds(
+    tableIds: number[],
+    newTableId: number,
+    entityManager?: EntityManager,
+  ) {
+    const orderRepository = entityManager
+      ? entityManager.getRepository(Order)
+      : this.orderRepository;
+    return await orderRepository.update(
+      { tableId: In(tableIds), status: Not(EOrderStatus.COMPLETED) },
+      { tableId: newTableId },
+    );
+  }
 }

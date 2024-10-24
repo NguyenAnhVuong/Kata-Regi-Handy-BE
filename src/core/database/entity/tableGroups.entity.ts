@@ -9,9 +9,9 @@ export class TableGroup {
   @Field(() => Int)
   id: number;
 
-  @Column({ name: 'restaurantId', type: 'int' })
+  @Column({ name: 'rootTableId', type: 'int' })
   @Field(() => Int)
-  restaurantId: number;
+  rootTableId: number;
 
   @Column({
     name: 'createdAt',

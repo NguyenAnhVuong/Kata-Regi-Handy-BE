@@ -9,3 +9,85 @@ array_relationships:
         table:
           name: tables
           schema: public
+insert_permissions:
+  - role: RESTAURANT_ADMIN
+    permission:
+      check:
+        tables:
+          restaurantId:
+            _eq: x-hasura-restaurant-id
+      columns:
+        - createdAt
+        - rootTableId
+    comment: ""
+  - role: RESTAURANT_STAFF
+    permission:
+      check:
+        tables:
+          restaurantId:
+            _eq: x-hasura-restaurant-id
+      columns:
+        - createdAt
+        - rootTableId
+    comment: ""
+select_permissions:
+  - role: RESTAURANT_ADMIN
+    permission:
+      columns:
+        - id
+        - rootTableId
+        - createdAt
+      filter:
+        tables:
+          restaurantId:
+            _eq: x-hasura-restaurant-id
+    comment: ""
+  - role: RESTAURANT_STAFF
+    permission:
+      columns:
+        - id
+        - rootTableId
+        - createdAt
+      filter:
+        tables:
+          restaurantId:
+            _eq: x-hasura-restaurant-id
+    comment: ""
+update_permissions:
+  - role: RESTAURANT_ADMIN
+    permission:
+      columns:
+        - createdAt
+        - rootTableId
+      filter:
+        tables:
+          restaurantId:
+            _eq: x-hasura-restaurant-id
+      check: null
+    comment: ""
+  - role: RESTAURANT_STAFF
+    permission:
+      columns:
+        - createdAt
+        - rootTableId
+      filter:
+        tables:
+          restaurantId:
+            _eq: x-hasura-restaurant-id
+      check: null
+    comment: ""
+delete_permissions:
+  - role: RESTAURANT_ADMIN
+    permission:
+      filter:
+        tables:
+          restaurantId:
+            _eq: x-hasura-restaurant-id
+    comment: ""
+  - role: RESTAURANT_STAFF
+    permission:
+      filter:
+        tables:
+          restaurantId:
+            _eq: x-hasura-restaurant-id
+    comment: ""

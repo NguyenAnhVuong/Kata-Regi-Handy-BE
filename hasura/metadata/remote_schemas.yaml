@@ -76,6 +76,7 @@
             createMenu(createMenuInput: VCreateMenuInput!): MenuRes!
             createOrder(createOrderInput: CreateOrderInput!): CreateRes!
             createPayment(createPaymentInput: CreatePaymentInput!): UpdateRes!
+            createTableGroup(createTableGroupInput: CreateTableGroupInput!): CreateRes!
             deleteMenu(id: Int!): UpdateRes!
             restaurantAdminRegister(restaurantAdminRegisterInput: VRestaurantAdminRegisterInput!): UserRes!
             systemRegister(systemRegisterInput: VSystemRegisterInput!): UserRes!
@@ -216,6 +217,10 @@
           }
           input CreatePaymentInput {
             tableId: Int!
+          }
+          input CreateTableGroupInput {
+            rootTableId: Int!
+            tableIds: [Int!]!
           }
           input UpdateOrderInput {
             id: Int!
@@ -329,6 +334,7 @@
             createMenu(createMenuInput: VCreateMenuInput!): MenuRes!
             createOrder(createOrderInput: CreateOrderInput!): CreateRes!
             createPayment(createPaymentInput: CreatePaymentInput!): UpdateRes!
+            createTableGroup(createTableGroupInput: CreateTableGroupInput!): CreateRes!
             deleteMenu(id: Int!): UpdateRes!
             restaurantAdminRegister(restaurantAdminRegisterInput: VRestaurantAdminRegisterInput!): UserRes!
             systemRegister(systemRegisterInput: VSystemRegisterInput!): UserRes!
@@ -469,6 +475,10 @@
           }
           input CreatePaymentInput {
             tableId: Int!
+          }
+          input CreateTableGroupInput {
+            rootTableId: Int!
+            tableIds: [Int!]!
           }
           input UpdateOrderInput {
             id: Int!
