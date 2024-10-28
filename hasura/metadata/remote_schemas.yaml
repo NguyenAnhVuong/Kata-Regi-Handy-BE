@@ -24,6 +24,13 @@
             statusCode: Int!
             timestamp: String!
           }
+          type DeleteRes {
+            data: Boolean!
+            errorCode: String
+            errorMessage: String
+            statusCode: Int!
+            timestamp: String!
+          }
           type GetTablesRes {
             data: [TableInfo!]!
             errorCode: String
@@ -78,6 +85,7 @@
             createPayment(createPaymentInput: CreatePaymentInput!): UpdateRes!
             createTableGroup(createTableGroupInput: CreateTableGroupInput!): CreateRes!
             deleteMenu(id: Int!): UpdateRes!
+            deleteTableGroup(deleteTableGroupInput: DeleteTableGroupInput!): DeleteRes!
             restaurantAdminRegister(restaurantAdminRegisterInput: VRestaurantAdminRegisterInput!): UserRes!
             systemRegister(systemRegisterInput: VSystemRegisterInput!): UserRes!
             updateMenu(updateMenuInput: VUpdateMenuInput!): UpdateRes!
@@ -221,6 +229,9 @@
           input CreateTableGroupInput {
             rootTableId: Int!
             tableIds: [Int!]!
+          }
+          input DeleteTableGroupInput {
+            groupId: Int!
           }
           input UpdateOrderInput {
             id: Int!
@@ -282,6 +293,13 @@
             statusCode: Int!
             timestamp: String!
           }
+          type DeleteRes {
+            data: Boolean!
+            errorCode: String
+            errorMessage: String
+            statusCode: Int!
+            timestamp: String!
+          }
           type GetTablesRes {
             data: [TableInfo!]!
             errorCode: String
@@ -336,6 +354,7 @@
             createPayment(createPaymentInput: CreatePaymentInput!): UpdateRes!
             createTableGroup(createTableGroupInput: CreateTableGroupInput!): CreateRes!
             deleteMenu(id: Int!): UpdateRes!
+            deleteTableGroup(deleteTableGroupInput: DeleteTableGroupInput!): DeleteRes!
             restaurantAdminRegister(restaurantAdminRegisterInput: VRestaurantAdminRegisterInput!): UserRes!
             systemRegister(systemRegisterInput: VSystemRegisterInput!): UserRes!
             updateMenu(updateMenuInput: VUpdateMenuInput!): UpdateRes!
@@ -479,6 +498,9 @@
           input CreateTableGroupInput {
             rootTableId: Int!
             tableIds: [Int!]!
+          }
+          input DeleteTableGroupInput {
+            groupId: Int!
           }
           input UpdateOrderInput {
             id: Int!

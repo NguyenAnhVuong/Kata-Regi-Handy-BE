@@ -4,6 +4,8 @@ import { GQLRoles } from '@core/decorator/GQLRoles.decorator';
 import { ERole } from '@core/enum';
 import { CreateRes } from '@core/global/entities/createRes.entity';
 import { CreateTableGroupInput } from './dto/create-table-group.input';
+import { DeleteRes } from '@core/global/entities/deleteRest.entity';
+import { DeleteTableGroupInput } from './dto/delete-table-group.input';
 
 @Resolver()
 export class TableGroupResolver {
@@ -15,5 +17,15 @@ export class TableGroupResolver {
     @Args('createTableGroupInput') createTableGroupInput: CreateTableGroupInput,
   ) {
     return this.tableGroupService.createTableGroup(createTableGroupInput);
+  }
+
+  @GQLRoles([ERole.RESTAURANT_ADMIN, ERole.RESTAURANT_STAFF])
+  @Mutation(() => DeleteRes, { name: 'deleteTableGroup' })
+  deleteTableGroup(
+    @Args('deleteTableGroupInput') deleteTableGroupInput: DeleteTableGroupInput,
+  ) {
+    return this.tableGroupService.deleteTableGroup(
+      deleteTableGroupInput.groupId,
+    );
   }
 }

@@ -8,5 +8,6 @@
   "SYSTEM_REGISTER_CODE_INCORRECT": "Admin register code incorrect",
   "RESTAURANT_NOT_EXISTS": "Restaurant not exists",
   "MENU_CATEGORY_NOT_EXISTS": "Menu category not exists",
-  "TABLE_DOES_NOT_EXISTS": "Table does not exists"
+  "TABLE_DOES_NOT_EXISTS": "Table does not exists",
+  "TABLE_GROUP_DOES_NOT_EXISTS": "Table group does not exists"
 }
