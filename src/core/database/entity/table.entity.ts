@@ -49,7 +49,7 @@ export class Table {
   @Field(() => ETableStatus)
   status: ETableStatus;
 
-  @Column({ name: 'amountOfPeople', type: 'int' })
+  @Column({ name: 'amountOfPeople', type: 'int', default: 0 })
   @Field(() => Int)
   amountOfPeople: number;
 

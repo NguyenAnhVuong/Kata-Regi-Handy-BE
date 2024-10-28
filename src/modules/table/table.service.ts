@@ -2,7 +2,7 @@ import { Table } from '@core/database/entity/table.entity';
 import { OrderService } from '@modules/order/order.service';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DataSource, EntityManager, In, Repository } from 'typeorm';
+import { DataSource, EntityManager, In, Not, Repository } from 'typeorm';
 // import { OrderItemService } from '@modules/order-item/order-item.service';
 import { ErrorMessage, ETableStatus } from '@core/enum';
 import { IUserData } from '@core/interface/default.interface';
@@ -132,6 +132,25 @@ export class TableService {
     return await tableRepository.update(
       { id: In(tableIds) },
       { status: ETableStatus.GROUPED, groupId },
+    );
+  }
+
+  async deleteGroupTableByGroupId(
+    groupId: number,
+    rootTableId: number,
+    entityManager?: EntityManager,
+  ) {
+    const tableRepository = entityManager
+      ? entityManager.getRepository(Table)
+      : this.tableRepository;
+    await tableRepository.update(
+      { id: rootTableId, groupId },
+      { status: ETableStatus.INUSE, groupId: null },
+    );
+
+    return await tableRepository.update(
+      { id: Not(rootTableId), groupId },
+      { status: ETableStatus.OPEN, groupId: null, amountOfPeople: 0 },
     );
   }
 }
