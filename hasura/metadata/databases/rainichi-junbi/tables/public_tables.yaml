@@ -2,6 +2,13 @@ table:
   name: tables
   schema: public
 object_relationships:
+  - name: childGroup
+    using:
+      foreign_key_constraint_on:
+        column: rootTableId
+        table:
+          name: tableGroups
+          schema: public
   - name: group
     using:
       manual_configuration:

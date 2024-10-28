@@ -1,6 +1,10 @@
 table:
   name: tableGroups
   schema: public
+object_relationships:
+  - name: rootTable
+    using:
+      foreign_key_constraint_on: rootTableId
 array_relationships:
   - name: tables
     using:
