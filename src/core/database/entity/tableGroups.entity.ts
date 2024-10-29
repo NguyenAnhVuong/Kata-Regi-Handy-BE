@@ -1,5 +1,5 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Table } from './table.entity';
 
 @Entity('tableGroups')
@@ -24,4 +24,9 @@ export class TableGroup {
   @OneToMany(() => Table, (table) => table.group)
   @Field(() => [Table])
   tables: Table[];
+
+  @OneToOne(() => Table, (table) => table.childGroup)
+  @Field(() => Table)
+  @JoinColumn({name: 'rootTableId'})
+  rootTable: Table
 }

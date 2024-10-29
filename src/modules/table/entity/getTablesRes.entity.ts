@@ -7,6 +7,11 @@ export class TableInfo extends Table {
 
   @Field(() => Number)
   total: number;
+  @Field(() => Number, {nullable: true})
+  rootTableId: number;
+  @Field(() => String, {nullable: true})
+  rootTableName: string;
+  
 }
 
 @ObjectType()

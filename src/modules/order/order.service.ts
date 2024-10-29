@@ -1,5 +1,5 @@
 import { InjectRepository } from '@nestjs/typeorm';
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, Inject, forwardRef } from '@nestjs/common';
 import { CreateOrderInput } from './dto/create-order.input';
 import { Order } from '@core/database/entity/order.entity';
 import { DataSource, EntityManager, In, Not, Repository } from 'typeorm';
@@ -9,6 +9,7 @@ import { UpdateOrderInput } from './dto/update-order.input';
 import { MenuService } from '@modules/menu/menu.service';
 import { ErrorMessage } from '@core/enum';
 import { EOrderStatus } from '@core/enum';
+import { TableService } from '@modules/table/table.service';
 
 @Injectable()
 export class OrderService {
@@ -18,14 +19,18 @@ export class OrderService {
     private readonly dataSource: DataSource,
     private readonly orderItemService: OrderItemService,
     private readonly menuService: MenuService,
+    @Inject(forwardRef(() => TableService))
+    private readonly tableService: TableService
   ) {}
+
   async createOrder(createOrderInput: CreateOrderInput) {
+    const { tableId, orderItems } = createOrderInput;
+    const rootTableId = await this.tableService.findRootTableId(tableId);
     return await this.dataSource.transaction(
       async (entityManager: EntityManager) => {
-        const { tableId, orderItems } = createOrderInput;
         const orderRepository = entityManager.getRepository(Order);
         const newOrder = await orderRepository.save({
-          tableId,
+          tableId: rootTableId,
         });
 
         const newOrderItems = await Promise.all(

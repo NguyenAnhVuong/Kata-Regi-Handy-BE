@@ -5,6 +5,7 @@ import {
   JoinColumn,
   ManyToOne,
   OneToMany,
+  OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -76,4 +77,8 @@ export class Table {
   @Field(() => TableGroup, { nullable: true })
   @JoinColumn({ name: 'groupId' })
   group: TableGroup;
+
+  @OneToOne(() => TableGroup, (tableGroup) => tableGroup.rootTable)
+  @Field(() => TableGroup, {nullable: true})
+  childGroup: TableGroup;
 }
