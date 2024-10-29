@@ -1,4 +1,10 @@
-import { HttpException, HttpStatus, Injectable, Inject, forwardRef } from '@nestjs/common';
+import {
+  HttpException,
+  HttpStatus,
+  Injectable,
+  Inject,
+  forwardRef,
+} from '@nestjs/common';
 import { CreateTableGroupInput } from './dto/create-table-group.input';
 import { OrderService } from '@modules/order/order.service';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -20,6 +26,15 @@ export class TableGroupService {
   ) {}
   async createTableGroup(createTableGroupInput: CreateTableGroupInput) {
     const { rootTableId, tableIds } = createTableGroupInput;
+
+    const rootTable = await this.tableService.getTableById(rootTableId);
+
+    if (!rootTable) {
+      throw new HttpException(
+        ErrorMessage.TABLE_DOES_NOT_EXISTS,
+        HttpStatus.BAD_REQUEST,
+      );
+    }
 
     return this.dataSource.transaction(async (entityManager) => {
       const tableGroupRepository = entityManager.getRepository(TableGroup);
@@ -87,5 +102,4 @@ export class TableGroupService {
 
     await tableGroupRepository.delete(id);
   }
-  
 }
