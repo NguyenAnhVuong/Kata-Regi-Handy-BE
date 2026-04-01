@@ -1,6 +1,12 @@
 import { Table } from '@core/database/entity/table.entity';
 import { OrderService } from '@modules/order/order.service';
-import { forwardRef, HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
+import {
+  forwardRef,
+  HttpException,
+  HttpStatus,
+  Inject,
+  Injectable,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, EntityManager, In, Not, Repository } from 'typeorm';
 // import { OrderItemService } from '@modules/order-item/order-item.service';
@@ -20,7 +26,7 @@ export class TableService {
     private readonly orderService: OrderService, // private readonly orderItemService: OrderItemService,
     @Inject(forwardRef(() => TableGroupService))
     private readonly tableGroupService: TableGroupService,
-  ) { }
+  ) {}
 
   async getTables(userData: IUserData) {
     const result = await this.tableRepository
@@ -68,7 +74,10 @@ export class TableService {
         'total',
       )
       .where('table.status = :inuseStatus', { inuseStatus: ETableStatus.INUSE })
-      .orWhere('table.status = :groupedStatus AND table.id = group.rootTableId', { groupedStatus: ETableStatus.GROUPED })
+      .orWhere(
+        'table.status = :groupedStatus AND table.id = group.rootTableId',
+        { groupedStatus: ETableStatus.GROUPED },
+      )
       .groupBy('table.id')
       .orderBy('table.id')
       .getRawMany();
@@ -114,20 +123,26 @@ export class TableService {
   ) {
     const { tableId } = createPaymentInput;
     //find groupId
-    const currentTable = await this.tableRepository.findOne({ where: { id: tableId }, select: ['groupId'] })
-    const groupId = currentTable ? currentTable.groupId : null
+    const currentTable = await this.tableRepository.findOne({
+      where: { id: tableId },
+      select: ['groupId'],
+    });
+    const groupId = currentTable ? currentTable.groupId : null;
 
     return await this.dataSource.transaction(
       async (entityManager: EntityManager) => {
         //update table / root table
-        const setTableOpen = await entityManager
-          .getRepository(Table)
-          .update(
-            { id: tableId },
-            { status: ETableStatus.OPEN, amountOfPeople: 0, openAt: null, groupId: null },
-          );
+        const setTableOpen = await entityManager.getRepository(Table).update(
+          { id: tableId },
+          {
+            status: ETableStatus.OPEN,
+            amountOfPeople: 0,
+            openAt: null,
+            groupId: null,
+          },
+        );
 
-        if ((setTableOpen.affected == 0)) {
+        if (setTableOpen.affected == 0) {
           throw new HttpException(
             ErrorMessage.TABLE_DOES_NOT_EXISTS,
             HttpStatus.BAD_REQUEST,
@@ -137,16 +152,21 @@ export class TableService {
         if (groupId) {
           await entityManager.getRepository(Table).update(
             { id: Not(tableId), groupId },
-            { groupId: null, status: ETableStatus.OPEN, amountOfPeople: 0, openAt: null }
-          )
-          await this.tableGroupService.deleteTableGroupById(groupId, entityManager)
+            {
+              groupId: null,
+              status: ETableStatus.OPEN,
+              amountOfPeople: 0,
+              openAt: null,
+            },
+          );
+          await this.tableGroupService.deleteTableGroupById(
+            groupId,
+            entityManager,
+          );
         }
 
         //update order status to complete
-        return await this.orderService.updateStatusMany(
-          tableId,
-          entityManager,
-        );
+        return await this.orderService.updateStatusMany(tableId, entityManager);
       },
     );
   }
@@ -159,10 +179,16 @@ export class TableService {
     const tableRepository = entityManager
       ? entityManager.getRepository(Table)
       : this.tableRepository;
-    return await tableRepository.update(
+    const { affected } = await tableRepository.update(
       { id: In(tableIds) },
       { status: ETableStatus.GROUPED, groupId },
     );
+    if (affected !== tableIds.length) {
+      throw new HttpException(
+        ErrorMessage.TABLE_DOES_NOT_EXISTS,
+        HttpStatus.BAD_REQUEST,
+      );
+    }
   }
 
   async deleteGroupTableByGroupId(
@@ -185,10 +211,24 @@ export class TableService {
   }
 
   async findRootTableId(tableId: number) {
-    const thisTable = await this.tableRepository.findOne({ where: { id: tableId }, relations: ['group'] })
-    if (!thisTable) throw new HttpException(ErrorMessage.TABLE_DOES_NOT_EXISTS, HttpStatus.BAD_REQUEST);
-    if (thisTable.status === ETableStatus.GROUPED && thisTable.groupId) return thisTable.group.rootTableId;
+    const thisTable = await this.tableRepository.findOne({
+      where: { id: tableId },
+      relations: ['group'],
+    });
+    if (!thisTable)
+      throw new HttpException(
+        ErrorMessage.TABLE_DOES_NOT_EXISTS,
+        HttpStatus.BAD_REQUEST,
+      );
+    if (thisTable.status === ETableStatus.GROUPED && thisTable.groupId)
+      return thisTable.group.rootTableId;
     return tableId;
   }
 
+  async getTableById(tableId: number, entityManager?: EntityManager) {
+    const tableRepository = entityManager
+      ? entityManager.getRepository(Table)
+      : this.tableRepository;
+    return await tableRepository.findOne({ where: { id: tableId } });
+  }
 }
